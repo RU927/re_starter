@@ -99,6 +99,7 @@ function back_sym {
 				echo -e "${RED}Can't move the old config!${RC}"
 				exit 1
 			fi
+			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 		fi
 		echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
 		if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
@@ -114,6 +115,7 @@ function back_sym {
 				echo -e "${RED}Can't move the old config!${RC}"
 				exit 1
 			fi
+			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 		fi
 		echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
 		if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
@@ -121,15 +123,23 @@ function back_sym {
 			exit 1
 		fi
 	done
+}
 
-	echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. ${RC}"
+function install_greenclip {
+	echo -e "${RV} Installing greenclip ${RC}"
+	#Greenclip (rofi clipboard manager)
+	wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
+	mkdir -p ~/.local/bin
+	mv greenclip ~/.local/bin
+	chmod 775 ~/.local/bin/greenclip
 }
 
 function all {
 	echo -e "\u001b[7m Setting up Dotfiles... \u001b[0m"
 	install_depend
 	back_sym
-	install_fonts
+	install_greenclip
+	# install_fonts
 	echo -e "\u001b[7m Done! \u001b[0m"
 }
 
@@ -145,6 +155,7 @@ echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (a) ALL \u001b[0m"
 echo -e "  \u001b[34;1m (d) dependencies \u001b[0m"
 echo -e "  \u001b[34;1m (b) back_sym \u001b[0m"
+echo -e "  \u001b[34;1m (g) greenclip \u001b[0m"
 
 echo -e "  \u001b[31;1m (*) Anything else to exit \u001b[0m"
 
@@ -164,6 +175,10 @@ case $option in
 
 "b")
 	back_sym
+	;;
+
+"g")
+	install_greenclip
 	;;
 *)
 	echo -e "\u001b[31;1m Invalid option entered, Bye! \u001b[0m"
