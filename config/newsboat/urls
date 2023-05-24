@@ -1,0 +1,51 @@
+# Make sure to put query feeds at the top of the config
+# if you want it to show above others feeds in newsbeuter
+
+# -------- Query Feeds {{{
+# ------------------------------------------------------
+# http://www.offensivethinking.org/blog/2009/05/12/efficient-rss-reading.html
+# https://github.com/gpakosz/.newsbeuter/blob/master/urls
+# http://www.newsbeuter.org/doc/newsbeuter.html#_query_feeds
+# query:<name of feed>:<filter expression> [<tag> ...]
+"query:All Unread Articles:unread = \"yes\""
+"query:All Articles News-states:tags # \"News-states\"" "News-states"
+"query:All Articles Video-MMA:tags # \"Video-MMA\"" "Video-MMA"
+
+#"query:All Articles Linux:tags # \"Linux\"" "Linux"
+#"query:All Articles Linux-Packages:tags # \"Linux-Packages\"" "Linux-Packages"
+#"query:All Articles Linux-Emulator:tags # \"Linux-Emulator\"" "Linux-Emulator"
+#"query:All Articles Linux-Gaming:tags # \"Linux-Gaming\"" "Linux-Gaming"
+#"query:All Articles Linux-Top:tags # \"Linux-Top\"" "Linux-Top"
+#"query:All Articles Linux-CLI:tags # \"Linux-CLI\"" "Linux-CLI"
+#"query:All Articles Linux-Subreddit:tags # \"Linux-Subreddit\"" "Linux-Subreddit"
+#"query:All Articles Video-Linux:tags # \"Video-Linux\"" "Video-Linux"
+# }}}
+
+# -------- News-states {{{
+# ------------------------------------------------------
+https://ria.ru/export/rss2/archive/index.xml "News-states"
+https://rssexport.rbc.ru/rbcnews/news/30/full.rss "News-states"
+# }}}
+
+# -------- Video-MMA {{{
+# ------------------------------------------------------
+https://www.youtube.com/feeds/videos.xml?user=UFC "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=themmanuts "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=submissionradioau "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=OneFCMMA "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=InvictaFC "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=thefightnetwork "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=BellatorMMA "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=MMAinterviews "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=MMAWeeklyVideos "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=KnuckleGame "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=ArielHelwani "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=KarynBryant "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=mmaheat "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=HDNetFights "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=UFCONFOXofficial "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=MMAFightingonSBN "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=GracieBreakdown "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?user=TheUltimateFighterFX "Video-MMA"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC789h3eqw0H1HqGmIsI26OA "Video-MMA" "~TheMacLife productions"
+# }}}

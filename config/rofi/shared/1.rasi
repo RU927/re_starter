@@ -1,0 +1,269 @@
+/*----- Main Window -----*/
+window {
+    /* properties for window widget */
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    height:                      240px;
+    width:                       960px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      3px solid;
+    border-radius:               0px;
+    border-color:                @border-col;
+    cursor:                      "default";
+    /* Backgroud Colors */
+    background-color:            @bg-col;
+    /* Backgroud Image */
+    //background-image:          url("/path/to/image.png", none);
+    /* Simple Linear Gradient */
+    //background-image:          linear-gradient(red, orange, pink, purple);
+    /* Directional Linear Gradient */
+    //background-image:          linear-gradient(to bottom, pink, yellow, magenta);
+    /* Angle Linear Gradient */
+    //background-image:          linear-gradient(45, cyan, purple, indigo);
+}
+
+/*----- Main Box -----*/
+mainbox {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @border-col;
+    background-color:            @bg-col;
+    children:                    [ "inputbar", "message", "listview", "mode-switcher" ];
+}
+
+/*----- Inputbar -----*/
+inputbar {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     3px;
+    border:                      1px solid;
+    border-radius:               0px;
+    border-color:                @border-col;
+    background-color:            @bg-col-light;
+    text-color:                  @fg-col;
+    children:                    [entry];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            @blue;
+    text-color:                  @bg-col;
+    padding:                     6px;
+    border-radius:               15px;
+    margin: 20px 0px 0px 0px;
+}
+textbox-prompt-colon {
+    enabled:                     false;
+    padding:                     5px 0px;
+    expand:                      false;
+    str:                         "  ";
+    background-color:            @bg-col;
+    text-color:                  @fg-color;
+}
+entry {
+    enabled:                     true;
+    padding:                     1px 40px;
+    margin:                      20px 0px 0px 10px;
+    text-color:                  @fg-col;
+    background-color:            @bg-col-light;
+    cursor:                      text;
+    placeholder:                 "Search...";
+    placeholder-color:           inherit;
+}
+num-filtered-rows {
+    enabled:                     true;
+    expand:                      false;
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+textbox-num-sep {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "/";
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+num-rows {
+    enabled:                     true;
+    expand:                      false;
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+case-indicator {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+/*----- Listview -----*/
+listview {
+    enabled:                     true;
+    columns:                     3;
+    lines:                       8;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   true;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+
+
+    spacing:                     3px;
+    padding:                     3px 3px 3px;
+    margin:                      0px 0px 0px 0px;
+    border:                      1px 1px 1px;
+    border-radius:               0px;
+    border-color:                @border-col;
+    background-color:            @bg-col-light;
+    text-color:                  @fg-col;
+    cursor:                      "default";
+}
+scrollbar {
+    handle-width:                4px;
+    handle-color:                @fg-col2;
+    border-radius:               0px;
+    background-color:            @blue;
+}
+
+/*----- Elements -----*/
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     1px 10px;
+    border:                      1px solid;
+    border-radius:               10px;
+    border-color:                @border-col;
+    background-color:            @bg-col;
+    text-color:                  @fg-col;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color:            var(normal-background);
+    text-color:                  var(normal-foreground);
+}
+element normal.urgent {
+    background-color:            var(urgent-background);
+    text-color:                  var(urgent-foreground);
+}
+element normal.active {
+    background-color:            var(active-background);
+    text-color:                  var(active-foreground);
+}
+element selected.normal {
+    background-color:            var(selected-normal-background);
+    text-color:                  var(selected-normal-foreground);
+}
+element selected.urgent {
+    background-color:            var(selected-urgent-background);
+    text-color:                  var(selected-urgent-foreground);
+}
+element selected.active {
+    background-color:            var(selected-active-background);
+    text-color:                  var(selected-active-foreground);
+}
+element alternate.normal {
+    background-color:            var(alternate-normal-background);
+    text-color:                  var(alternate-normal-foreground);
+}
+element alternate.urgent {
+    background-color:            var(alternate-urgent-background);
+    text-color:                  var(alternate-urgent-foreground);
+}
+element alternate.active {
+    background-color:            var(alternate-active-background);
+    text-color:                  var(alternate-active-foreground);
+}
+
+element-icon {
+    background-color:            inherit;
+    text-color:                  inherit;
+    size:                        20px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+/*----- Mode Switcher -----*/
+mode-switcher{
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     3px;
+    border:                      1px solid;
+    border-radius:               0px;
+    border-color:                @border-col;
+    background-color:            @bg-col-light;
+    text-color:                  inherit;
+}
+button {
+    vertical-align: 0.5; 
+    horizontal-align: 0.5;
+
+    padding:                     0px 0px;
+    border:                      1px solid;
+    border-radius:               10px;
+    border-color:                @border-col;
+    background-color:            @bg-col;
+    text-color:                  @fg-col;
+    cursor:                      pointer;
+}
+button selected {
+    background-color:            @selected;
+    text-color:                  @fg-col2;
+}
+
+/*----- Message -----*/
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @border-col;
+    background-color:            @bg-col;
+    text-color:                  @fg-col;
+}
+textbox {
+    padding:                     8px 10px;
+    border:                      0px solid;
+    border-radius:               10px;
+    border-color:                @border-col;
+    background-color:            @bg-col-light;
+    text-color:                  @fg-col;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    highlight:                   none;
+    placeholder-color:           @fg-col;
+    blink:                       true;
+    markup:                      true;
+}
+error-message {
+    padding:                     10px;
+    border:                      2px solid;
+    border-radius:               10px;
+    border-color:                @border-col;
+    background-color:            @bg-col;
+    text-color:                  @fg-col;
+}
+

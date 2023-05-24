@@ -1,0 +1,41 @@
+* {
+    selected:       #87c095;
+
+    active:         #98D379;
+    urgent:         #F06B74;
+
+    bg-col: #2B3339;
+    bg-col-light: #333b41;
+    border-col: #333b41;
+    selected-col: #333b41;
+    blue: #87c095;
+    fg-col: #b4bbc8;
+    fg-col2: #e67e80;
+    grey: #545c62;
+    width: 600;
+}
+* {
+    border-colour:               var(selected);
+    handle-colour:               var(selected);
+    background-colour:           var(bg-col);
+    foreground-colour:           var(fg-col);
+    alternate-background:        var(bg-col-light);
+    normal-background:           var(bg-col);
+    normal-foreground:           var(fg-col);
+    urgent-background:           var(urgent);
+    urgent-foreground:           var(bg-col);
+    active-background:           var(active);
+    active-foreground:           var(bg-col);
+    selected-normal-background:  var(selected);
+    selected-normal-foreground:  var(bg-col);
+    selected-urgent-background:  var(active);
+    selected-urgent-foreground:  var(bg-col);
+    selected-active-background:  var(urgent);
+    selected-active-foreground:  var(bg-col);
+    alternate-normal-background: var(bg-col);
+    alternate-normal-foreground: var(fg-col);
+    alternate-urgent-background: var(urgent);
+    alternate-urgent-foreground: var(bg-col);
+    alternate-active-background: var(active);
+    alternate-active-foreground: var(bg-col);
+}
