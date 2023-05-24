@@ -11,7 +11,7 @@ WHITE='[37;1m'
 RV='\u001b[7m'
 
 THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
-# THIS_REPO_PATH=$HOME/REPOS/reinst
+# THIS_REPO_PATH=$HOME/REPOS/re_starter
 DOT_CFG_PATH=$THIS_REPO_PATH/config
 DOT_HOME_PATH=$THIS_REPO_PATH/home
 USR_CFG_PATH=$HOME/.config
@@ -122,7 +122,6 @@ function back_sym {
 		fi
 	done
 
-	echo -e "${GREEN}Done!\nrestart your shell to see the changes.${RC}"
 	echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. ${RC}"
 }
 
