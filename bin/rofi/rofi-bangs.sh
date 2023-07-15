@@ -19,7 +19,7 @@ COMMANDS["apps"]="rofi -combi-modi window,drun -show combi"
 LABELS["apps"]=""
 
 # open bookmarks
-COMMANDS["bookmarks"]="rofi-surfraw-bookmarks.sh"
+COMMANDS["bookmarks"]="rofi-bookmarks.sh"
 LABELS["bookmarks"]=""
 
 # search local files

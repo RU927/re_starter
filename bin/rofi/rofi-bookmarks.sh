@@ -3,19 +3,19 @@
 # Bookmark locations
 brave="$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/Default/Bookmarks"
 surfraw="$XDG_CONFIG_HOME/surfraw/bookmarks"
-firefox="$HOME/.mozilla/firefox/path/to/places.sqlite"
-librewolf="$HOME/.librewolf/path/to/places.sqlite"
+# firefox="$HOME/.mozilla/firefox/path/to/places.sqlite"
+# librewolf="$HOME/.librewolf/path/to/places.sqlite"
 googlechrome="$HOME/.config/google-chrome/Default/Bookmarks"
 # Browser specific parsers
 
 # Surfraw
 surfr() {
-	cut -f2,4- $1
+	cut -f2,4- "$1"
 }
 
 # Chrome, Chromium, Brave
 chrome() {
-	jq -r '.roots[] | recurse(.children[]?) | select(.type != "folder") | {url, name} | join("\n")' $1 | paste - -
+	jq -r '.roots[] | recurse(.children[]?) | select(.type != "folder") | {url, name} | join("\n")' "$1" | paste - -
 }
 
 # Firefox, Librewolf
@@ -28,6 +28,6 @@ sr $({
 	chrome $googlechrome &
 	chrome $brave &
 	surfr $surfraw &
-	moz $firefox &
-	moz $librewolf
+	# moz $firefox &
+	# moz $librewolf
 } | sort | awk '!x[$1]++' | rofi -dmenu -mesg | awk '{print $1}')
