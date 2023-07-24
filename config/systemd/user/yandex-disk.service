@@ -1,0 +1,6 @@
+[Unit]
+Description=yandex-disk 
+After=network.target
+
+[Service]
+ExecStart=yandex-disk start
