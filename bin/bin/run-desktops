@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+from gi.repository import Gio
+from argparse import ArgumentParser
+import sys, os
+
+def find_app(search_string):
+    for group in Gio.DesktopAppInfo.search(search_string):
+        for entry in group:
+            try:
+                return Gio.DesktopAppInfo.new(entry)
+            except: pass
+    return None
+
+def main(args):
+    launcher = None
+    if os.path.isfile(args.appName):
+        try:
+        # If it's a file, do that first.
+            launcher = Gio.DesktopAppInfo.new_from_filename(args.appName)
+        except TypeError:
+            print ("'" + args.appName + "' is not a .desktop file")
+            sys.exit(-1)
+    # If it's a .desktop file in the DB, try using that
+    if launcher is None and args.appName.endswith('.desktop'):
+        try:
+            launcher = Gio.DesktopAppInfo.new(args.appName)
+        except TypeError: pass
+
+    if launcher is None:
+        # Search for the app by the text given
+        launcher = find_app(args.appName)
+
+    if launcher is None:
+        print ("No app named " + args.appName + " could be found")
+        sys.exit(-1)
+    if (launcher.supports_uris()):
+        launcher.launch_uris(args.uris, None)
+    elif (launcher.supports_files()):
+        launcher.launch(list({ Gio.File.parse_name(x) for x in args.uris }), None)
+    else :
+        launcher.launch()
+
+if __name__ == "__main__":
+    argParser = ArgumentParser(description="Launch a .desktop file or application")
+    argParser.add_argument("appName", 
+        help="the name of any application, a desktop file's basename, or a concrete path to a desktop file", 
+        action='store'
+    )
+    argParser.add_argument("uris", 
+        nargs='*', 
+        help="Files or URIs to pass to the application"
+    )
+    args = argParser.parse_args()
+    main(args)
