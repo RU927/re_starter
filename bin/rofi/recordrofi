@@ -5,8 +5,8 @@ themename='config'
 TMPDIR="$HOME/vids/tmp"
 DESTDIR="$HOME/vids/ffmpeg"
 
-[[ ! -f $TMPDIR ]] && mkdir -p $TMPDIR
-[[ ! -f $DESTDIR ]] && mkdir -p $DESTDIR
+[[ ! -f $TMPDIR ]] && mkdir -p "$TMPDIR"
+[[ ! -f $DESTDIR ]] && mkdir -p "$DESTDIR"
 
 prompt() {
 	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 350px;}' \

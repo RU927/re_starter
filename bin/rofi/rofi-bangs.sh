@@ -40,6 +40,9 @@ LABELS["websearch"]=""
 COMMANDS["clipboard"]='rofi -modi "clipboard:greenclip print" -show clipboard'
 LABELS["clipboard"]=""
 
+COMMANDS["record"]="recordrofi"
+LABELS["record"]=""
+
 # references --------------------------
 # COMMANDS[";sr2"]="chromium 'wikipedia.org/search-redirect.php?search=\" \${input}\""
 # LABELS[";sr2"]=""
@@ -60,9 +63,9 @@ LABELS["clipboard"]=""
 # Generate menu
 ##
 function print_menu() {
-	for key in ${!LABELS[@]}; do
-		echo "$key    ${LABELS}"
-		#   echo "$key    ${LABELS[$key]}"
+	for key in "${!LABELS[@]}"; do
+		# echo "$key ${LABELS}"
+		echo "$key    ${LABELS[$key]}"
 		# my top version just shows the first field in labels row, not two words side by side
 	done
 }
@@ -71,7 +74,8 @@ function print_menu() {
 ##
 function start() {
 	# print_menu | rofi -dmenu -p "?=>"
-	print_menu | sort | rofi -dmenu -mesg ">>> launch your collection of rofi scripts" -i -p "rofi-bangs: "
+	# print_menu | sort | rofi -dmenu -mesg ">>> launch your collection of rofi scripts" -i -p "rofi-bangs: "
+	print_menu | sort | rofi -dmenu
 
 }
 

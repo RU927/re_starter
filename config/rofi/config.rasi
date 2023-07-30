@@ -93,9 +93,9 @@ configuration {
 
 /*---- File browser settings ----*/
     filebrowser {
-/*    directory: "/home";*/
-      directories-first: true;
+      directory: "/home";
       sorting-method:    "name";
+      directories-first: true;
     }
 
 /*---- Other settings ----*/
