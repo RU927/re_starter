@@ -28,7 +28,7 @@ command_exists() {
 
 checkEnv() {
 	## Check Package Handeler
-	PACKAGEMANAGER='apt dnf pacman'
+	PACKAGEMANAGER='apt dnf'
 	for pgm in ${PACKAGEMANAGER}; do
 		if command_exists "${pgm}"; then
 			PACKAGER=${pgm}
@@ -73,19 +73,7 @@ install_depend() {
 	DEPENDENCIES='rofi dmenu \
     surfraw surfraw-extra newsboat locate mlocate'
 	echo -e "${YELLOW}Installing dependencies...${RC}"
-	if [[ $PACKAGER == "pacman" ]]; then
-		if ! command_exists yay; then
-			echo "Installing yay..."
-			sudo "${PACKAGER}" --noconfirm -S base-devel
-			$(cd /opt && sudo git clone https://aur.archlinux.org/yay-git.git && sudo chown -R \
-				${USER}:${USER} ./yay-git && cd yay-git && makepkg --noconfirm -si)
-		else
-			echo "Command yay already installed"
-		fi
-		yay --noconfirm -S "${DEPENDENCIES}"
-	else
-		sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
-	fi
+	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
 
 function back_sym {
