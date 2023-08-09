@@ -71,7 +71,7 @@ checkEnv
 install_depend() {
 	## Check for dependencies.
 	DEPENDENCIES='rofi dmenu \
-    surfraw surfraw-extra newsboat locate mlocate'
+    surfraw surfraw-extra newsboat'
 	echo -e "${YELLOW}Installing dependencies...${RC}"
 	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
