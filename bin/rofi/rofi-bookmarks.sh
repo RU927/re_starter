@@ -25,9 +25,10 @@ moz() {
 }
 
 sr $({
-	chrome $googlechrome &
-	chrome $brave &
-	surfr $surfraw &
+	chrome "$googlechrome" &
+	chrome "$brave" &
+	surfr "$surfraw" &
 	# moz $firefox &
 	# moz $librewolf
-} | sort | awk '!x[$1]++' | rofi -dmenu -mesg | awk '{print $1}')
+} | sort | awk '!x[$1]++' | rofi -theme ~/.config/rofi/clipboard.rasi -dmenu -mesg | awk '{print $1}')
+# } | sort | awk '!x[$1]++' | rofi -dmenu -mesg | awk '{print $1}')
