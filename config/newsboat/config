@@ -656,7 +656,10 @@ cleanup-on-quit no
 #
 # Default value: n/a
 #
-# include "~/.newsboat/colors"
+# include "~/.config/newsboat/colors/gruvbox"
+# include "~/.config/newsboat/colors/cyanism"
+# include "~/.config/newsboat/colors/commander"
+# include "~/.config/newsboat/colors/greenscreen"
 
 ####  itemview-title-format
 #
