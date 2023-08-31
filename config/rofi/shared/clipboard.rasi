@@ -33,9 +33,9 @@ window {
 /*----- Main Box -----*/
 mainbox {
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     0px;
     margin:                      0px;
-    padding:                     10px;
+    padding:                     5px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @border-col;
@@ -50,6 +50,7 @@ inputbar {
     margin:                      0px;
     padding:                     3px;
     border:                      1px solid;
+    border:                      1px 1px 0px;
     border-radius:               0px;
     border-color:                @border-col;
     background-color:            @bg-col-light;
@@ -111,7 +112,7 @@ case-indicator {
 /*----- Listview -----*/
 listview {
     enabled:                     true;
-    columns:                     3;
+    columns:                     1;
     lines:                       8;
     cycle:                       true;
     dynamic:                     true;
@@ -125,7 +126,7 @@ listview {
     spacing:                     3px;
     padding:                     3px 3px 3px;
     margin:                      0px 0px 0px 0px;
-    border:                      1px 1px 1px;
+    border:                      0px 1px 0px;
     border-radius:               0px;
     border-color:                @border-col;
     background-color:            @bg-col-light;
@@ -144,7 +145,7 @@ element {
     enabled:                     true;
     spacing:                     10px;
     margin:                      0px;
-    padding:                     1px 10px;
+    padding:                     1px 0px;
     border:                      1px solid;
     border-radius:               10px;
     border-color:                @border-col;
@@ -207,13 +208,14 @@ element-text {
 /*----- Mode Switcher -----*/
 mode-switcher{
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     0px;
     margin:                      0px;
-    padding:                     3px;
+    padding:                     0px;
     border:                      1px solid;
+    border:                      0px 0px 0px;
     border-radius:               0px;
     border-color:                @border-col;
-    background-color:            @bg-col-light;
+    background-color:            @bg-col;
     text-color:                  inherit;
 }
 button {
@@ -221,16 +223,19 @@ button {
     horizontal-align: 0.5;
 
     padding:                     0px 0px;
-    border:                      1px solid;
-    border-radius:               10px;
+    border:                      0px solid;
+    border:                      1px 0px 0px;
+    border-radius:               0px;
     border-color:                @border-col;
     background-color:            @bg-col;
     text-color:                  @fg-col;
     cursor:                      pointer;
 }
 button selected {
-    background-color:            @selected;
+    background-color:            @bg-col-light;
     text-color:                  @fg-col2;
+    border:                      0px 1px 1px;
+    border-color:                @border-col;
 }
 
 /*----- Message -----*/
@@ -266,4 +271,5 @@ error-message {
     background-color:            @bg-col;
     text-color:                  @fg-col;
 }
+
 

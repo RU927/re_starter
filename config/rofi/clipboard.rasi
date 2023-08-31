@@ -1,0 +1,36 @@
+
+configuration {
+/*---- General setting ----*/
+/*  modi: "drun,window,filebrowser,run,emoji";*/
+    modi: "drun,window,run,ssh";
+    case-sensitive: false;
+    cycle: true;
+    filter: "";
+    scroll-method: 0;
+    normalize-match: true;
+    show-icons: true;
+    icon-theme: "Reversal";
+    icon-theme: "Oranchelo";
+/*  cache-dir: ;*/
+    steal-focus: false;
+/*  dpi: -1;*/
+
+/*---- Matching setting ----*/
+    matching: "normal";
+    tokenize: true;
+
+/*---- Window switcher settings ----*/
+    window-match-fields: "title,class,role,name,desktop";
+    window-command: "wmctrl -i -R {window}";
+    window-format:              "{w} · {c} · {t}";
+    /* window-format: "{w} - {c} - {t:0}"; */
+    window-thumbnail: false;
+
+/*---- Display setting ----*/
+    display-clipboard:          "clipboard";
+
+}
+
+@theme "brassy"
+@import "shared/clipboard"
+
