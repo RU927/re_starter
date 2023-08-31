@@ -2,7 +2,7 @@
 configuration {
 /*---- General setting ----*/
 /*  modi: "drun,window,filebrowser,run,emoji";*/
-    modi: "drun,window,run";
+    modi: "drun,window,run,ssh";
     case-sensitive: false;
     cycle: true;
     filter: "";
@@ -75,11 +75,11 @@ configuration {
     /* display-Network:           " 󰤨  Network"; */
     display-filebrowser:        "  ";
 /*  display-emoji:              " ";*/
-    display-windowcd: "Window CD";
-    display-ssh: "SSH";
-    display-combi: "Combi";
-    display-keys: "Keys";
-    display-clipboard: "clipboard";
+    display-windowcd:           "Window CD";
+    display-ssh:                "SSH";
+    display-combi:              "Combi";
+    display-keys:               "Keys";
+    display-clipboard:          "clipboard";
 
 /*---- Misc setting ----*/
     terminal: "rofi-sensible-terminal";
