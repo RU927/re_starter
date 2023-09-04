@@ -45,6 +45,19 @@ LABELS["clipboard"]=""
 COMMANDS["record"]="recordrofi.sh"
 LABELS["record"]=""
 
+COMMANDS["rofi-files"]="rofi-files"
+LABELS["rofi-files"]=""
+
+COMMANDS["pass-gui"]="pass-rofi-gui"
+LABELS["pass-gui"]=""
+
+COMMANDS["rofi-systemd"]="rofi-systemd"
+LABELS["rofi-systemd"]=""
+
+# COMMANDS["json"]='rofi -modi "json:rofi-json.sh my_apps.json" -show json'
+COMMANDS["json"]='rofi -modi config:"rofi-json.sh config.json","json:rofi-json.sh my_apps.json" -show json'
+LABELS["json"]=""
+
 # references --------------------------
 # COMMANDS[";sr2"]="chromium 'wikipedia.org/search-redirect.php?search=\" \${input}\""
 # LABELS[";sr2"]=""

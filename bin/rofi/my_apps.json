@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Google Chrome",
+    "command": "google-chrome-stable",
+    "icon": "google-chrome"
+  },
+  {
+    "name": "Terminal",
+    "command": "urxvt",
+    "icon": "terminal"
+  },
+  {
+    "name": "gnome-disks"
+  }
+]
