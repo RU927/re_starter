@@ -96,6 +96,13 @@ function back_sym {
 		fi
 	done
 
+	applist="$THIS_REPO_PATH/local/share/applications"
+
+	for ma in $(command ls "${applist}"); do
+		echo -e "${GREEN}Linking ${applist}/${ma} to $HOME/.local/share/applications/${ma} ${RC}"
+		ln -snf "$applist/$ma" "$HOME/.local/share/applications/$ma"
+	done
+
 	# for config in $(command ls "${DOT_HOME_PATH}"); do
 	# 	if configExists "$HOME/.${config}"; then
 	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
@@ -111,6 +118,7 @@ function back_sym {
 	# 		exit 1
 	# 	fi
 	# done
+	# xdg-mime default nbrowser.desktop x-scheme-handler/https x-scheme-handler/http x-scheme-handler/browser
 }
 
 function install_greenclip {
