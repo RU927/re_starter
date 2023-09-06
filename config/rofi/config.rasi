@@ -106,5 +106,5 @@ configuration {
 }
 
 @theme "brassy"
-@import "shared/2"
+@import "format/main"
 

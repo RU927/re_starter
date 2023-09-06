@@ -1,5 +1,8 @@
 #!/bin/sh
 
+rofi_theme=$HOME/.config/rofi/format/list.rasi
+rofi_cmd="rofi -theme $rofi_theme -dmenu -mesg"
+
 # Bookmark locations
 brave="$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/Default/Bookmarks"
 surfraw="$XDG_CONFIG_HOME/surfraw/bookmarks"
@@ -30,5 +33,5 @@ sr $({
 	surfr "$surfraw"
 	# moz "$firefox"
 	# moz "$librewolf"
-} | sort | awk '!x[$1]++' | rofi -theme ~/.config/rofi/only_list_config.rasi -dmenu -mesg | awk '{print $1}')
+} | sort | awk '!x[$1]++' | $rofi_cmd | awk '{print $1}')
 # } | sort | awk '!x[$1]++' | rofi -dmenu -mesg | awk '{print $1}')
