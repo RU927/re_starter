@@ -15,8 +15,8 @@ declare -A COMMANDS
 # List of defined 'bangs'
 
 # launch programs
-COMMANDS["apps"]="rofi -combi-modi window,drun -show combi"
-LABELS["apps"]=""
+# COMMANDS["apps"]="rofi -combi-modi window,drun -show combi"
+# LABELS["apps"]=""
 
 # open bookmarks
 COMMANDS["bookmarks"]="rofi-bookmarks.sh"
@@ -45,14 +45,14 @@ LABELS["clipboard"]=""
 COMMANDS["record"]="recordrofi.sh"
 LABELS["record"]=""
 
-COMMANDS["rofi-files"]="rofi-files"
-LABELS["rofi-files"]=""
+COMMANDS["files"]="rofi-files"
+LABELS["files"]=""
 
-COMMANDS["pass-gui"]="pass-rofi-gui"
-LABELS["pass-gui"]=""
+COMMANDS["pass"]="pass-rofi-gui"
+LABELS["pass"]=""
 
-COMMANDS["rofi-systemd"]="rofi-systemd"
-LABELS["rofi-systemd"]=""
+COMMANDS["systemd"]="rofi-systemd"
+LABELS["systemd"]=""
 
 # COMMANDS["json"]='rofi -modi "json:rofi-json.sh my_apps.json" -show json'
 COMMANDS["json"]='rofi -modi config:"rofi-json.sh config.json","json:rofi-json.sh my_apps.json" -show json'
@@ -87,10 +87,11 @@ function print_menu() {
 ##
 # Show rofi.
 ##
+bangs_theme="$HOME/.config/rofi/format/list_min.rasi"
 function start() {
 	# print_menu | rofi -dmenu -p "?=>"
 	# print_menu | sort | rofi -dmenu -mesg ">>> launch your collection of rofi scripts" -i -p "rofi-bangs: "
-	print_menu | sort | rofi -dmenu
+	print_menu | sort | rofi -theme "$bangs_theme" -dmenu
 
 }
 

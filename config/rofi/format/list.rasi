@@ -244,9 +244,10 @@ message {
     text-color:                  @foreground-colour;
 }
 textbox {
-    padding:                     8px 10px;
+    padding:                     4px 7px;
     border:                      0px solid;
-    border-radius:               10px;
+    border:                      0px 1px 0px 1px;
+    border-radius:               0px;
     border-color:                @border-colour;
     background-color:            @alternate-background;
     text-color:                  @foreground-colour;
