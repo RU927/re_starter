@@ -1,45 +1,41 @@
 * {
-    selected:       #ddd1a0;
-    
-    active:         #98D379;
-    urgent:         #F06B74;
-   
-    bg-col:  #575025;
-    bg-col-light: #756b2f;
-    border-col: #3b361c;
-    selected-col: #282b2c;
-    blue: #ddd1a0;
-    fg-col: #d4be98;
-    fg-col2: #211e12;
-    grey: #5b5e5f;
+    0-1: #98D379;
+    0-2: #5b5e5f;
+    1: #ddd1a0;
+    2: #d4be98;
+    3: #756b2f;
+    4: #575025;
+    5: #3b361c;
+    6: #282b2c;
+    7: #211e12;
     width: 600;
 
-}
+    border-colour:               @5;
+    handle-colour:               @1;
+    background-colour:           @4;
+    foreground-colour:           @2;
+    alternate-background:        @3;
 
-* {
-    border-colour:               var(selected);
-    handle-colour:               var(selected);
-    background-colour:           var(bg-col);
-    foreground-colour:           var(fg-col);
-    alternate-background:        var(bg-col-light);
-    normal-background:           var(bg-col);
-    normal-foreground:           var(fg-col);
-    urgent-background:           var(urgent);
-    urgent-foreground:           var(bg-col);
-    active-background:           var(active);
-    active-foreground:           var(bg-col);
-    selected-normal-background:  var(selected);
-    selected-normal-foreground:  var(bg-col);
-    selected-urgent-background:  var(active);
-    selected-urgent-foreground:  var(bg-col);
-    selected-active-background:  var(urgent);
-    selected-active-foreground:  var(bg-col);
-    alternate-normal-background: var(bg-col);
-    alternate-normal-foreground: var(fg-col);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(bg-col);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(bg-col);
+    normal-background:           @4;
+    normal-foreground:           @2;
+    urgent-background:           @0-2;
+    urgent-foreground:           @4;
+    active-background:           @0-1;
+    active-foreground:           @7;
+
+    selected-normal-background:  @1;
+    selected-normal-foreground:  @4;
+    selected-urgent-background:  @0-1;
+    selected-urgent-foreground:  @4;
+    selected-active-background:  @0-2;
+    selected-active-foreground:  @4;
+
+    alternate-normal-background: @4;
+    alternate-normal-foreground: @2;
+    alternate-urgent-background: @0-2;
+    alternate-urgent-foreground: @4;
+    alternate-active-background: @0-1;
+    alternate-active-foreground: @4;
 }
 
 

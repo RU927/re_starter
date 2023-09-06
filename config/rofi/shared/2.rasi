@@ -16,10 +16,10 @@ window {
     padding:                     0px;
     border:                      3px solid;
     border-radius:               0px;
-    border-color:                @border-col;
+    border-color:                @border-colour;
     cursor:                      "default";
     /* Backgroud Colors */
-    background-color:            @bg-col;
+    background-color:            @background-color;
     /* Backgroud Image */
     //background-image:          url("/path/to/image.png", none);
     /* Simple Linear Gradient */
@@ -38,8 +38,8 @@ mainbox {
     padding:                     5px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                @border-col;
-    background-color:            @bg-col;
+    border-color:                @border-colour;
+    background-color:            @background-colour;
     children:                    [ "inputbar", "message", "listview", "mode-switcher" ];
 }
 
@@ -52,16 +52,16 @@ inputbar {
     border:                      1px solid;
     border:                      1px 1px 0px;
     border-radius:               0px;
-    border-color:                @border-col;
-    background-color:            @bg-col-light;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @alternate-background;
+    text-color:                  @foreground-colour;
     children:                    [entry];
 }
 
 prompt {
     enabled:                     true;
-    background-color:            @blue;
-    text-color:                  @bg-col;
+    background-color:            @foreground-colour;
+    text-color:                  @background-color;
     padding:                     6px;
     border-radius:               15px;
     margin: 20px 0px 0px 0px;
@@ -71,17 +71,17 @@ textbox-prompt-colon {
     padding:                     5px 0px;
     expand:                      false;
     str:                         "  ";
-    background-color:            @bg-col;
-    text-color:                  @fg-color;
+    background-color:            @background-color;
+    text-color:                  @foreground-colour;
 }
 entry {
     enabled:                     true;
-    padding:                     1px 40px;
-    margin:                      20px 0px 0px 10px;
-    text-color:                  @fg-col;
-    background-color:            @bg-col-light;
+    padding:                     1px 10px;
+    margin:                      5px 0px 0px 10px;
+    text-color:                  @foreground-colour;
+    background-color:            @alternate-background;
     cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 "";
     placeholder-color:           inherit;
 }
 num-filtered-rows {
@@ -128,16 +128,16 @@ listview {
     margin:                      0px 0px 0px 0px;
     border:                      0px 1px 0px;
     border-radius:               0px;
-    border-color:                @border-col;
-    background-color:            @bg-col-light;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @alternate-background;
+    text-color:                  @foreground-colour;
     cursor:                      "default";
 }
 scrollbar {
     handle-width:                4px;
-    handle-color:                @fg-col2;
+    handle-color:                @active-foreground;
     border-radius:               0px;
-    background-color:            @blue;
+    background-color:            @foreground-colour;
 }
 
 /*----- Elements -----*/
@@ -148,9 +148,9 @@ element {
     padding:                     1px 0px;
     border:                      1px solid;
     border-radius:               10px;
-    border-color:                @border-col;
-    background-color:            @bg-col;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @background-color;
+    text-color:                  @foreground-colour;
     cursor:                      pointer;
 }
 element normal.normal {
@@ -214,8 +214,8 @@ mode-switcher{
     border:                      1px solid;
     border:                      0px 0px 0px;
     border-radius:               0px;
-    border-color:                @border-col;
-    background-color:            @bg-col;
+    border-color:                @border-colour;
+    background-color:            @background-color;
     text-color:                  inherit;
 }
 button {
@@ -226,16 +226,16 @@ button {
     border:                      0px solid;
     border:                      1px 0px 0px;
     border-radius:               0px;
-    border-color:                @border-col;
-    background-color:            @bg-col;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @background-colour;
+    text-color:                  @foreground-colour;
     cursor:                      pointer;
 }
 button selected {
-    background-color:            @bg-col-light;
-    text-color:                  @fg-col2;
+    background-color:            @alternate-background;
+    text-color:                  @active-foreground;
     border:                      0px 1px 1px;
-    border-color:                @border-col;
+    border-color:                @border-colour;
 }
 
 /*----- Message -----*/
@@ -245,21 +245,21 @@ message {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                @border-col;
-    background-color:            @bg-col;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @background-color;
+    text-color:                  @foreground-colour;
 }
 textbox {
     padding:                     8px 10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @border-col;
-    background-color:            @bg-col-light;
-    text-color:                  @fg-col;
+    border-color:                @border-colour;
+    background-color:            @alternate-background;
+    text-color:                  @foreground-colour;
     vertical-align:              0.5;
     horizontal-align:            0.0;
     highlight:                   none;
-    placeholder-color:           @fg-col;
+    placeholder-color:           @foreground-colour;
     blink:                       true;
     markup:                      true;
 }
@@ -267,7 +267,7 @@ error-message {
     padding:                     10px;
     border:                      2px solid;
     border-radius:               10px;
-    border-color:                @border-col;
+    border-color:                @border-colour;
     background-color:            @bg-col;
     text-color:                  @fg-col;
 }
