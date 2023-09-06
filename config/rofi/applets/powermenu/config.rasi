@@ -1,0 +1,92 @@
+/*
+ * powermenu/config.rasi - Power Menu Applet
+ * Layout configuration for power applet
+ * @author umutsevdi
+ */
+
+
+configuration {
+    disable-history:                false;
+    sidebar-mode:                   false;
+}
+
+@import "../global.rasi"
+
+* {
+    background-color:               @solid-bg;
+    text-color:                     @solid-fg;
+    font:                           "Roboto Mono Nerd Font 12";
+}
+
+window {
+    transparency:                   "real";
+    anchor:     north;
+    location:   northeast;
+    location:                    center;
+    anchor:                      center;
+    children:   [ horibox ];
+    width: 50%;
+}
+
+mainbox {
+    background-color:               @bg;
+    children:                       [ horibox];
+    spacing:                        12px;
+}
+
+horibox {
+    orientation: horizontal;
+    children:   [ textbox-prompt-colon, prompt, listview ];
+}
+
+listview {
+    background-color:               @bg-none;
+    cycle:                          true;
+    layout:                         horizontal;
+    spacing:    5px;
+    lines:      5;
+}
+
+element {
+    background-color:               @bg-dark;
+    text-color:                     @fg;
+    orientation:                    vertical;
+    border-radius:                  0;
+}
+
+element-text {
+    background-color:               @bg-none;
+    text-color:                     @fg;
+    font:                           @nerdfont;
+    expand:                         false;
+    horizontal-align:               0.5;
+    margin:                         0 10 0 10;
+}
+
+element selected {
+    background-color:               @solid-focus;
+    text-color:                     @fg-dark;
+    border-radius:                  0;
+}
+
+element-text selected {
+    text-color:                     @fg-dark;
+    expand:                         false;
+    horizontal-align:               0.5;
+    border-radius:                  0;
+}
+prompt {
+    background-color:               @bg-none;
+    text-color:                     @fg;
+    border-radius:                  0px;
+    font:                           "Roboto Mono Nerd Font 12";
+    margin:  0 11% 0 1%;
+}
+
+textbox-prompt-colon {
+    expand:                         false;
+    str:                            "   ";
+    background-color:               @solid-focus;
+    text-color:                     @fg-dark;
+    font:                           "Roboto Mono Nerd Font 10";
+}

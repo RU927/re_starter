@@ -106,17 +106,17 @@ input=${value:$((${#choice} + 1))}
 ##
 # Cancelled? bail out
 ##
-if test -z ${choice}; then
+if test -z "${choice}"; then
 	exit
 fi
 
 # check if choice exists
-if test ${COMMANDS[$choice]+isset}; then
+if test "${COMMANDS[$choice]+isset}"; then
 	# Execute the choice
 	eval echo "Executing: ${COMMANDS[$choice]}"
-	eval ${COMMANDS[$choice]}
+	eval "${COMMANDS[$choice]}"
 else
-	eval $choice | rofi
+	eval "$choice" | rofi
 	# prefer my above so I can use this same script to also launch apps like geany or leafpad etc (DK)
 	#   echo "Unknown command: ${choice}" | rofi -dmenu -p "error"
 fi
