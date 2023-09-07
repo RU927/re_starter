@@ -97,15 +97,15 @@ mergefiles() {
 
 	EXTENS="mp3"
 	if [ -f *.mp4 ]; then
-		ffmpeg -y -i -- *.mp4 -i output.mp3 -c copy output.mp4
-		mv -- *.mp4 output.mp4
-		rm -- *.mp3
+		ffmpeg -y -i *.mp4 -i output.mp3 -c copy output.mp4
+		mv *.mp4 output.mp4
+		rm *.mp3
 		EXTENS="mp4"
 	fi
 
 	mv output.mp* "$DESTDIR/$(cat /tmp/recname && cat /tmp/recdate).$EXTENS"
-	rm -- *.mp4
-	rm -- *.mp3
+	rm *.mp4
+	rm *.mp3
 	rm mp3list
 }
 
