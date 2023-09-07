@@ -84,15 +84,26 @@ function print_menu() {
 		# my top version just shows the first field in labels row, not two words side by side
 	done
 }
+
 ##
 # Show rofi.
 ##
-bangs_theme="$HOME/.config/rofi/format/list_min.rasi"
-function start() {
-	# print_menu | rofi -dmenu -p "?=>"
-	# print_menu | sort | rofi -dmenu -mesg ">>> launch your collection of rofi scripts" -i -p "rofi-bangs: "
-	print_menu | sort | rofi -theme "$bangs_theme" -dmenu
+theme="$HOME/.config/rofi/config.rasi"
+function rofs() {
+	rofi \
+		-theme-str 'window {location: center; anchor: center; fullscreen: false; height: 240px; width: 480px;}' \
+		-theme-str 'mainbox {children: [ "inputbar", "message", "listview", "mode-switcher" ];}' \
+		-theme-str 'listview {columns: 1; spacing: 1px; border: 0px 1px 1px;}' \
+		-theme-str 'entry {enabled: false;}' \
+		-theme-str 'element-text {horizontal-align: 0;}' \
+		-theme-str 'textbox {horizontal-align: 0;}' \
+		-theme "$theme" \
+		-dmenu \
+		-mesg ">>> launch your collection of rofi scripts"
+}
 
+function start() {
+	print_menu | sort | rofs
 }
 
 # Run it
