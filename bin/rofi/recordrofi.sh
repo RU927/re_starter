@@ -1,7 +1,7 @@
 #!/bin/bash
 
 themedir="$HOME/.config/rofi"
-themename='config'
+themename="config"
 TMPDIR="$HOME/vids/tmp"
 DESTDIR="$HOME/vids/ffmpeg"
 
@@ -9,15 +9,15 @@ DESTDIR="$HOME/vids/ffmpeg"
 [[ ! -f $DESTDIR ]] && mkdir -p "$DESTDIR"
 
 prompt() {
-	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 350px;}' \
+	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; height: 120px; width: 360px;}' \
 		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
-		-theme-str 'listview {columns: 2; lines: 1;}' \
+		-theme-str 'listview {columns: 1; lines: 1;}' \
 		-theme-str 'element-text {horizontal-align: 0.5;}' \
 		-theme-str 'textbox {horizontal-align: 0.5;}' \
 		-dmenu \
 		-p 'Confirmation' \
 		-mesg "$*" \
-		-theme ${themedir}/${themename}.rasi
+		-theme "${themedir}/${themename}".rasi
 }
 
 screenrec() {
@@ -62,21 +62,22 @@ micrec() {
 }
 
 startrec() {
-	SIZE="$(echo -e "Fullscreen\nArea" | prompt "Fullscreen or Area? (Esc = no video)")"
+	SIZE="$(echo -e "Fullscreen\nArea" | prompt "Fullscreen or Area?
+  (Esc = no video)")"
 	DESKAUDIO="$(echo -e "Yes\nNo" | prompt "Record desktop audio?")"
 	MIC="$(echo -e "Yes\nNo" | prompt "Record microphone?")"
 
-	if [ $SIZE = "Fullscreen" ]; then
+	if [ "$SIZE" = "Fullscreen" ]; then
 		screenrec
-	elif [ $SIZE = "Area" ]; then
+	elif [ "$SIZE" = "Area" ]; then
 		arearec
 	fi
 
-	if [ $DESKAUDIO = "Yes" ]; then
+	if [ "$DESKAUDIO" = "Yes" ]; then
 		audiodeskrec
 	fi
 
-	if [ $MIC = "Yes" ]; then
+	if [ "$MIC" = "Yes" ]; then
 		micrec
 	fi
 
@@ -84,7 +85,7 @@ startrec() {
 }
 
 mergefiles() {
-	cd $TMPDIR
+	cd "$TMPDIR" || exit
 
 	COUNT=0
 	for f in *.mp3; do
@@ -96,21 +97,21 @@ mergefiles() {
 
 	EXTENS="mp3"
 	if [ -f *.mp4 ]; then
-		ffmpeg -y -i *.mp4 -i output.mp3 -c copy output.mp4
-		mv *.mp4 output.mp4
-		rm *.mp3
+		ffmpeg -y -i -- *.mp4 -i output.mp3 -c copy output.mp4
+		mv -- *.mp4 output.mp4
+		rm -- *.mp3
 		EXTENS="mp4"
 	fi
 
 	mv output.mp* "$DESTDIR/$(cat /tmp/recname && cat /tmp/recdate).$EXTENS"
-	rm *.mp4
-	rm *.mp3
+	rm -- *.mp4
+	rm -- *.mp3
 	rm mp3list
 }
 
 stoprec() {
 	STOP="$(echo -e "Yes\nNo" | prompt "Stop Recording?")"
-	if [ $STOP = "Yes" ]; then
+	if [ "$STOP" = "Yes" ]; then
 		killall ffmpeg
 		mergefiles
 		rm /tmp/recname

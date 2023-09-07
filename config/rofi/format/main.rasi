@@ -147,7 +147,7 @@ element {
     margin:                      0px;
     padding:                     1px 0px;
     border:                      1px solid;
-    border-radius:               10px;
+    border-radius:               3px;
     border-color:                @border-colour;
     background-color:            @background-color;
     text-color:                  @foreground-colour;
