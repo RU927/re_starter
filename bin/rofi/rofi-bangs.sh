@@ -14,10 +14,6 @@ declare -A COMMANDS
 ###
 # List of defined 'bangs'
 
-# launch programs
-# COMMANDS["apps"]="rofi -combi-modi window,drun -show combi"
-# LABELS["apps"]=""
-
 # open bookmarks
 COMMANDS["bookmarks"]="rofi-bookmarks.sh"
 LABELS["bookmarks"]=""
@@ -26,27 +22,16 @@ LABELS["bookmarks"]=""
 COMMANDS["locate"]="rofi-locate.sh"
 LABELS["locate"]=""
 
+COMMANDS["files"]="rofi-files"
+LABELS["files"]=""
+
 # open custom web searches
 COMMANDS["websearch"]="rofi-surfraw-websearch.sh"
 LABELS["websearch"]=""
 
-# show clipboard history
-# source: https://bitbucket.org/pandozer/rofi-clipboard-manager/overview
-# COMMANDS["clipboard"]='rofi -modi "clipboard:~/.bin/rofi-clipboard-manager/mclip.py menu" -show clipboard && ~/.bin/rofi-clipboard-manager/mclip.py paste'
-# LABELS["clipboard"]=""
-
-# greenclip clipboard history
-# source: https://github.com/erebe/greenclip
-# COMMANDS["clipboard"]='rofi -modi "clipboard:greenclip print" -show clipboard'
-COMMANDS["clipboard"]="rofi-clipboard.sh"
-LABELS["clipboard"]=""
-
 #recordrofi
 COMMANDS["record"]="recordrofi.sh"
 LABELS["record"]=""
-
-COMMANDS["files"]="rofi-files"
-LABELS["files"]=""
 
 COMMANDS["pass"]="pass-rofi-gui"
 LABELS["pass"]=""
@@ -54,22 +39,21 @@ LABELS["pass"]=""
 COMMANDS["systemd"]="rofi-systemd"
 LABELS["systemd"]=""
 
-# COMMANDS["json"]='rofi -modi "json:rofi-json.sh my_apps.json" -show json'
 COMMANDS["json"]='rofi -modi config:"rofi-json.sh config.json","json:rofi-json.sh my_apps.json" -show json'
+# COMMANDS["json"]='rofi -modi "json:rofi-json.sh my_apps.json" -show json'
 LABELS["json"]=""
 
-# references --------------------------
-# COMMANDS[";sr2"]="chromium 'wikipedia.org/search-redirect.php?search=\" \${input}\""
-# LABELS[";sr2"]=""
+# launch programs
+# COMMANDS["apps"]="rofi -combi-modi window,drun -show combi"
+# LABELS["apps"]=""
 
-# COMMANDS[";piratebay"]="chromium --disk-cache-dir=/tmp/cache http://thepiratebay.org/search/\" \${input}\""
-# LABELS[";piratebay"]=""
+# # source: https://bitbucket.org/pandozer/rofi-clipboard-manager/overview
+# COMMANDS["clipboard"]='rofi -modi "clipboard:mclip.py menu" -show clipboard && mclip.py paste'
+# LABELS["clipboard"]=""
 
-# COMMANDS[".bin"]="spacefm -r '/home/dka/bin'"
-# LABELS[".bin"]=".bin"
-
-# COMMANDS["#screenshot"]='/home/dka/bin/screenshot-scripts/myscreenshot.sh'
-# LABELS["#screenshot"]="screenshot"
+# # greenclip clipboard history
+# COMMANDS["clipboard"]="rofi-clipboard.sh"
+# LABELS["clipboard"]=""
 
 ################################################################################
 # do not edit below
@@ -79,8 +63,7 @@ LABELS["json"]=""
 ##
 function print_menu() {
 	for key in "${!LABELS[@]}"; do
-		# echo "$key ${LABELS}"
-		echo "$key    ${LABELS[$key]}"
+		echo "$key ${LABELS[$key]}"
 		# my top version just shows the first field in labels row, not two words side by side
 	done
 }
@@ -98,8 +81,8 @@ function rofs() {
 		-theme-str 'element-text {horizontal-align: 0;}' \
 		-theme-str 'textbox {horizontal-align: 0;}' \
 		-theme "$theme" \
-		-dmenu \
-		-mesg ">>> launch your collection of rofi scripts"
+		-dmenu
+	# -mesg ">>> launch your collection of rofi scripts"
 }
 
 function start() {
