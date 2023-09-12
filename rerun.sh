@@ -73,6 +73,14 @@ install_depend() {
 	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
 
+sudoers() {
+	sudoers_dirs="etc/sudoers.d"
+	for s in $(command ls "$this_dir/$sudoers_dirs"); do
+		sudo rm -f "/$sudoers_dirs/$s"
+		sudo cp "$this_dir/$sudoers_dirs/$s" "/$sudoers_dirs/$s"
+	done
+}
+
 function back_sym {
 	# перед создание линков делает бекапы только тех пользовательских конфикураций,
 	# файлы которых есть в ./config ./home
@@ -142,7 +150,7 @@ function all {
 	install_depend
 	back_sym
 	install_greenclip
-	# install_fonts
+	sudoers
 	echo -e "\u001b[7m Done! \u001b[0m"
 }
 
@@ -151,7 +159,7 @@ if [ "$1" = "--backsym" ] || [ "$1" = "-b" ]; then
 	exit 0
 fi
 
-if [ "$1" = "--all" -o "$1" = "-a" ]; then
+if [ "$1" = "--all" ] || [ "$1" = "-a" ]; then
 	all
 	exit 0
 fi
@@ -164,6 +172,7 @@ echo -e "  \u001b[34;1m (a) ALL \u001b[0m"
 echo -e "  \u001b[34;1m (d) dependencies \u001b[0m"
 echo -e "  \u001b[34;1m (b) back_sym \u001b[0m"
 echo -e "  \u001b[34;1m (g) greenclip \u001b[0m"
+echo -e "  \u001b[34;1m (s) sudoers \u001b[0m"
 
 echo -e "  \u001b[31;1m (*) Anything else to exit \u001b[0m"
 
@@ -187,6 +196,10 @@ case $option in
 
 "g")
 	install_greenclip
+	;;
+
+"s")
+	sudoers
 	;;
 *)
 	echo -e "\u001b[31;1m Invalid option entered, Bye! \u001b[0m"

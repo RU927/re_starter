@@ -1,0 +1,17 @@
+User_Alias		GROUP_RU = ru
+
+Cmnd_Alias		POWER = /sbin/shutdown, /sbin/halt, /sbin/reboot, /sbin/restart
+Cmnd_Alias    GRUB = /sbin/grub-reboot
+Cmnd_Alias    UPDATE = /bin/apt update, /bin/apt upgrade, /bin/apt clean, /bin/deb-get update, /bin/deb-get upgrade, /usr/bin/updatedb
+Cmnd_Alias    CTL = /bin/systemctl enable, /bin/systemctl disable, /bin/systemctl reload, /bin/systemctl restart
+Cmnd_Alias    SEARCH = /bin/awk, /bin/cat, /bin/find 
+
+Runas_Alias		NGX = nixbld1, _guixbuilder0
+
+GROUP_RU    ALL = NOPASSWD: POWER, GRUB, UPDATE, CTL, SEARCH
+GROUP_RU    ALL = (NGX) ALL
+
+# GROUP_RU    ALL = NOEXEC: /usr/bin/less
+
+# GROUP_RU	ALL=(ALL:ALL) NOPASSWD: /usr/bin/systemctl, /usr/bin/apt, /usr/bin/awk, /usr/sbin/grub-reboot, /usr/sbin/reboot
+
