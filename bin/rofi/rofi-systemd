@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 rofi_cmd="rofi -theme ~/.config/rofi/format/list.rasi -dmenu -i -p"
-term=${ROFI_SYSTEMD_TERM-urxvt -e}
+term=${ROFI_SYSTEMD_TERM-$TERMINAL -e}
 default_action=${ROFI_SYSTEMD_DEFAULT_ACTION-"list_actions"}
 rofi_command=${ROFI_SYSTEMD_ROFI_COMMAND-"$rofi_cmd"}
 truncate_length=${ROFI_SYSTEMD_TRUNCATE_LENGTH-60}

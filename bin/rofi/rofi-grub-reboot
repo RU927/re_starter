@@ -50,11 +50,16 @@ const exec = util.promisify(require("child_process").exec);
    *  pakde
    *  just kidding
    *  ```
-   *
    */
 
   // rofi Scripts
-  const rofi_menu = 'rofi -dmenu -format i:s -p "Reboot to"';
+  // const rofi_menu = 'rofi -dmenu -format i:s -p "Reboot to"';
+  // 'rofi -theme "$HOME/.config/rofi/format/list_min.rasi" -dmenu -format i:s -p "Reboot to"';
+  const rofi_menu = 'rofi \
+    -theme-str "window {location: center; anchor: center; fullscreen: false; height: 180px; width: 840px;}" \
+	  -theme-str "mainbox {children: [ "inputbar", "message", "listview", "mode-switcher" ];}" \
+	  -theme-str "listview {columns: 1; spacing: 1px;}" \
+    -dmenu -format i:s -p "Reboot to"';
   const rofi_confirm = (os_label) =>
     `rofi -dmenu -no-fixed-num-lines -p "Reboot to ${os_label}? (Y/n)" &`;
   const rofi_cancel = 'rofi -e "Operation cancelled."';
@@ -62,7 +67,9 @@ const exec = util.promisify(require("child_process").exec);
 
   // get all grub menuentry
   const { stdout: rawMenuEntry } = await exec(
-    "sudo awk -F \\- /^menuentry/{print\\ \\$1} /boot/grub/grub.cfg | cut -d '\"' -f2"
+    // "sudo awk -F \\- /^menuentry/{print\\ \\$1} /boot/grub/grub.cfg | cut -d '\"' -f2",
+    'sudo awk -F \\- /^menuentry/{print\\ \\$1} /boot/grub/grub.cfg | cut -d "\'" -f2',
+    // "sudo awk '/menuentry/ && /class/ {count++; print count-1"****"$0 }' /boot/grub/grub.cfg | cut -d "\'" -f2",
   );
 
   // // split output by newline
@@ -77,7 +84,7 @@ const exec = util.promisify(require("child_process").exec);
   const cleaned = rawMenuEntry.slice(0, -1);
 
   const choosen_os_raw = await exec(`echo "${cleaned}" | ${rofi_menu}`).catch(
-    (err) => console.log("Exited: \n" + err)
+    (err) => console.log("Exited: \n" + err),
   );
 
   // stop if error

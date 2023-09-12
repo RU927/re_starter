@@ -14,6 +14,9 @@ declare -A COMMANDS
 ###
 # List of defined 'bangs'
 
+COMMANDS["grub-reboot"]="rofi-grub-reboot"
+LABELS["grub-reboot"]=""
+
 # open bookmarks
 COMMANDS["bookmarks"]="rofi-bookmarks.sh"
 LABELS["bookmarks"]=""
