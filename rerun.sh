@@ -4,19 +4,16 @@ RC='\e[0m'
 RED='\e[31m'
 YELLOW='\e[33m'
 GREEN='\e[32m'
-# GREEN2='[32;1m'
 WHITE='[37;1m'
-# BLUE='[34;1m'
 
 RV='\u001b[7m'
 
-THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
-# THIS_REPO_PATH=$HOME/REPOS/re_starter
-DOT_CFG_PATH=$THIS_REPO_PATH/config
-DOT_HOME_PATH=$THIS_REPO_PATH/home
-USR_CFG_PATH=$HOME/.config
-# USR_CFG_PATH=$THIS_REPO_PATH/test
-mkdir -p "$USR_CFG_PATH"
+this_dir="$(dirname "$(realpath "$0")")"
+dot_config=$this_dir/config
+dot_home=$this_dir/home
+config_dir=$HOME/.config
+
+mkdir -p "$config_dir"
 
 configExists() {
 	[[ -e "$1" ]] && [[ ! -L "$1" ]]
@@ -42,7 +39,7 @@ checkEnv() {
 	fi
 
 	## Check if the current directory is writable.
-	PATHs="$THIS_REPO_PATH $USR_CFG_PATH"
+	PATHs="$this_dir $config_dir"
 	for path in $PATHs; do
 		if [[ ! -w ${path} ]]; then
 			echo -e "${RED}Can't write to ${path}${RC}"
@@ -80,30 +77,30 @@ function back_sym {
 	# перед создание линков делает бекапы только тех пользовательских конфикураций,
 	# файлы которых есть в ./config ./home
 	echo -e "\u001b${YELLOW} Backing up existing files... ${RC}"
-	for config in $(command ls "${DOT_CFG_PATH}"); do
-		if configExists "${USR_CFG_PATH}/${config}"; then
-			echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
-			if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
+	for config in $(command ls "${dot_config}"); do
+		if configExists "${config_dir}/${config}"; then
+			echo -e "${YELLOW}Moving old config ${config_dir}/${config} to ${config_dir}/${config}.old${RC}"
+			if ! mv "${config_dir}/${config}" "${config_dir}/${config}.old"; then
 				echo -e "${RED}Can't move the old config!${RC}"
 				exit 1
 			fi
 			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 		fi
-		echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
-		if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
+		echo -e "${GREEN}Linking ${dot_config}/${config} to ${config_dir}/${config}${RC}"
+		if ! ln -snf "${dot_config}/${config}" "${config_dir}/${config}"; then
 			echo echo -e "${RED}Can't link the config!${RC}"
 			exit 1
 		fi
 	done
 
-	applist="$THIS_REPO_PATH/local/share/applications"
+	applist="$this_dir/local/share/applications"
 
 	for ma in $(command ls "${applist}"); do
 		echo -e "${GREEN}Linking ${applist}/${ma} to $HOME/.local/share/applications/${ma} ${RC}"
 		ln -snf "$applist/$ma" "$HOME/.local/share/applications/$ma"
 	done
 
-	# for config in $(command ls "${DOT_HOME_PATH}"); do
+	# for config in $(command ls "${dot_home}"); do
 	# 	if configExists "$HOME/.${config}"; then
 	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
 	# 		if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
@@ -112,8 +109,8 @@ function back_sym {
 	# 		fi
 	# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 	# 	fi
-	# 	echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
-	# 	if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
+	# 	echo -e "${GREEN}Linking ${dot_home}/${config} to ${HOME}/.${config}${RC}"
+	# 	if ! ln -snf "${dot_home}/${config}" "${HOME}/.${config}"; then
 	# 		echo echo -e "${RED}Can't link the config!${RC}"
 	# 		exit 1
 	# 	fi
