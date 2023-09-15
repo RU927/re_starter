@@ -81,7 +81,9 @@ sudoers() {
 		sudo cp "$this_dir/$sudoers_dirs/$s" "/$sudoers_dirs/$s"
 	done
 }
-
+#
+# file --mime-type /home/ru/.config/autostart/Yandex.Disk.desktop
+#
 function back_sym {
 	# перед создание линков делает бекапы только тех пользовательских конфикураций,
 	# файлы которых есть в ./config ./home
