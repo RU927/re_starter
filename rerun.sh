@@ -68,7 +68,8 @@ checkEnv
 install_depend() {
 	## Check for dependencies.
 	DEPENDENCIES='rofi dmenu \
-    surfraw surfraw-extra newsboat'
+    surfraw surfraw-extra newsboat \
+    dex'
 	echo -e "${YELLOW}Installing dependencies...${RC}"
 	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
