@@ -1,7 +1,8 @@
 #!/bin/sh
 
 rofi_theme=$HOME/.config/rofi/format/list.rasi
-rofi_cmd="rofi -theme $rofi_theme -dmenu -mesg"
+sep="\t"
+rofi_cmd="rofi -theme $rofi_theme -dmenu -sep $sep -eh 2"
 
 # Bookmark locations
 brave="$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/Default/Bookmarks"
@@ -27,11 +28,12 @@ moz() {
 	sqlite3 -separator '	' "$1" "$query" | cut -f2,3
 }
 
-sr $({
+expand="$({
 	chrome "$googlechrome" &
 	chrome "$brave" &
 	surfr "$surfraw"
 	# moz "$firefox"
 	# moz "$librewolf"
-} | sort | awk '!x[$1]++' | $rofi_cmd | awk '{print $1}')
-# } | sort | awk '!x[$1]++' | rofi -dmenu -mesg | awk '{print $1}')
+} | sort | awk '!x[$1]++' | $rofi_cmd | awk '/:\/\// {print $1}')"
+
+xdg-open "$expand" > /dev/null 2>&1 & 
