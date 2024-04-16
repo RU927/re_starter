@@ -32,8 +32,8 @@ configuration {
     drun-display-format: "{icon} {name}";
     drun-show-actions: false;
     drun-url-launcher: "xdg-open";
-    drun-use-desktop-cache: false;
-    drun-reload-desktop-cache: false;
+    drun-use-desktop-cache: true;
+    drun-reload-desktop-cache: true;
     drun {
         /** Parse user desktop files. */
         parse-user:   true;
@@ -87,7 +87,7 @@ configuration {
     font: "Roboto Mono Nerd Font 12";
     sort: false;
     threads: 0;
-    click-to-exit: true;
+    click-to-exit: false;
 /*  ignored-prefixes: "";*/
 /*  pid: "/run/user/1000/rofi.pid";*/
 

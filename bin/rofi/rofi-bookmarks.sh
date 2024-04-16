@@ -2,7 +2,8 @@
 
 rofi_theme=$HOME/.config/rofi/format/list.rasi
 sep="\t"
-rofi_cmd="rofi -theme $rofi_theme -dmenu -sep $sep -eh 2"
+# rofi_cmd="rofi -theme $rofi_theme -dmenu -sep $sep -eh 2"
+rofi_cmd="rofi -theme $rofi_theme -dmenu -matching fuzzy -sort -sorting-method fzf -sep $sep -eh 2"
 
 # Bookmark locations
 brave="$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/Default/Bookmarks"
