@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=xplr
+Comment=Launches the xplr file manager
+Terminal=true
+Exec=xplr %U
+Categories=ConsoleOnly;System;FileTools;FileManager
+MimeType=inode/directory;
+Keywords=File;Manager;Browser;Explorer;Launcher
+# Hidden=false
+# DBusActivatable=true

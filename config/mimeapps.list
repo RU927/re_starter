@@ -1,21 +1,19 @@
 [Added Associations]
-inode/directory=org.gnome.Nautilus.desktop;
 x-scheme-handler/geo=wheelmap-geo-handler.desktop;
 x-scheme-handler/http=google-chrome.desktop;
 x-scheme-handler/https=google-chrome.desktop;
-x-scheme-handler/mailto=thunderbird.desktop;
 x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
 
 [Default Applications]
+application/pdf=nbrowser.desktop;okularApplication_pdf.desktop;
 application/x-desktop=run-desktop.desktop;
-inode/directory=org.gnome.Nautilus.desktop;
-text/html=google-chrome.desktop;
-text/plain=run-desktop.desktop;
-x-scheme-handler/etcher=balena-etcher.desktop;
-x-scheme-handler/file=run-desktop.desktop;
+application/x-shellscript=neovim.desktop;
+image/jpeg=feh.desktop;gimp.desktop;
+image/png=feh.desktop;
+text/plain=/home/ru/.local/share/applications/neovim.desktop;
+x-scheme-handler/browser=nbrowser.desktop;
 x-scheme-handler/geo=wheelmap-geo-handler.desktop;
-x-scheme-handler/http=nbrowser.desktop
-x-scheme-handler/https=nbrowser.desktop
-x-scheme-handler/mailto=thunderbird.desktop;
+x-scheme-handler/http=nbrowser.desktop;
+x-scheme-handler/https=nbrowser.desktop;
 x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
-x-scheme-handler/browser=nbrowser.desktop
+
