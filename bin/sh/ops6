@@ -96,109 +96,133 @@ if [ "${#objects[@]}" -gt 1 ]; then
 			;;
 		esac
 	done
-
-	obj_l=("${!array[@]}")
-	typ_l=("${array[@]}")
-	cnt=0
-	while [ "$cnt" -lt "${#array[@]}" ]; do
-		echo -e "${#array[@]} ${typ_l[$cnt]} : ${obj_l[$cnt]}"
-		cnt="$(("$cnt" + 1))"
-	done
-
-else
-	file_type=$(mimetype -b "${objects[0]}")
 fi
-
-# Получаем тип файла
 
 # Ищем соответствующие приложения в ~/.config/mimeapps.list
-while IFS= read -r line; do
-	apps+=("$line")
-done < <(grep "$file_type" "$HOME"/.config/mimeapps.list | cut -d '=' -f 2 | tr ';' '\n' | sed '/^$/d' | xargs -n 1 basename)
-
-# Если список приложений пуст или задана опция -u, ищем в ~/.local/share/applications/
-if [ ${#apps[@]} -eq 0 ] || [ "$user_dir" = true ]; then
+search_app_f() {
 	while IFS= read -r line; do
-		new_apps+=("$line")
-	done < <(grep "$file_type" "$HOME"/.local/share/applications/*.desktop | cut -d ':' -f 1 | xargs -n 1 basename)
-	if [ ${#new_apps[@]} -ne 0 ]; then
-		apps=("${apps[@]}" "${new_apps[@]}")
-	fi
-fi
-
-# Если список приложений все еще пуст или задана опция -a, ищем в /usr/share/applications/ и пополняем список
-if [ ${#apps[@]} -eq 0 ] || [ "$all" = true ]; then
-	while IFS= read -r line; do
-		new_apps+=("$line")
-	done < <(grep "$file_type" /usr/share/applications/*.desktop | cut -d ':' -f 1 | xargs -n 1 basename)
-	if [ ${#new_apps[@]} -ne 0 ]; then
-		apps=("${apps[@]}" "${new_apps[@]}")
-	fi
-fi
-
-# Если список приложений все еще пуст, выводим сообщение об ошибке и выходим
-if [ ${#apps[@]} -eq 0 ]; then
-	echo "Не найдено приложений, способных обработать файл $1" 1>&2
-	exit 1
-fi
-
-# Если задана опция -a или -u и есть более одного приложения, передаем список приложений
-if [ "$all" = true ] || [ "$user_dir" = true ] && [ ${#apps[@]} -gt 1 ]; then
-	if [ "$silent" = true ]; then
-		app=${apps[0]}
-	else
-		if [ -n "$menu" ] && command -v $menu >/dev/null; then
-			# app=$(printf '%s\n' "${apps[@]}" | eval "$menu_command")
-
-			while IFS= read -r line; do
-				app_set+=("$line")
-			done < <(printf '%s\n' "${apps[@]}" | eval "$menu_command")
-			app=${app_set[0]}
-
-		else
-			echo "Выберите приложение из списка:"
-			select app in "${apps[@]}"; do
-				break
-			done
+		apps+=("$line")
+	done < <(grep "$file_type" "$HOME"/.config/mimeapps.list | cut -d '=' -f 2 | tr ';' '\n' | sed '/^$/d' | xargs -n 1 basename)
+	# Если список приложений пуст или задана опция -u, ищем в ~/.local/share/applications/
+	if [ ${#apps[@]} -eq 0 ] || [ "$user_dir" = true ]; then
+		while IFS= read -r line; do
+			new_apps+=("$line")
+		done < <(grep "$file_type" "$HOME"/.local/share/applications/*.desktop | cut -d ':' -f 1 | xargs -n 1 basename)
+		if [ ${#new_apps[@]} -ne 0 ]; then
+			apps=("${apps[@]}" "${new_apps[@]}")
 		fi
 	fi
-else
-	app=${apps[0]}
-fi
-
-# Открываем что-либо($@) в выбранном приложении($app) при помощи программы(должна находиться в $PATH)
-if [ ${#app_set[@]} -gt 1 ]; then
-	for s in "${app_set[@]}"; do
-		run-desktop "$s" "${objects[@]}" >/dev/null 2>&1 &
-	done
-else
-	run-desktop "$app" "${objects[@]}" >/dev/null 2>&1 &
-fi
-
-# Если задана опция -s, пропускаем диалог о добавлении или изменении приложения
-if [ "$silent" = false ]; then
-	# Проверяем, установлен ли handlr или xdg-utils
-	if command -v handlr >/dev/null; then
-		handler="handlr"
-		handler_command="set $file_type $app"
-	elif command -v xdg-mime >/dev/null; then
-		handler="xdg-mime"
-		handler_command="default $app $file_type"
-	else
-		echo "Не установлены handlr или xdg-utils" 1>&2
+	# Если список приложений все еще пуст или задана опция -a, ищем в /usr/share/applications/ и пополняем список
+	if [ ${#apps[@]} -eq 0 ] || [ "$all" = true ]; then
+		while IFS= read -r line; do
+			new_apps+=("$line")
+		done < <(grep "$file_type" /usr/share/applications/*.desktop | cut -d ':' -f 1 | xargs -n 1 basename)
+		if [ ${#new_apps[@]} -ne 0 ]; then
+			apps=("${apps[@]}" "${new_apps[@]}")
+		fi
+	fi
+	# Если список приложений все еще пуст, выводим сообщение об ошибке и выходим
+	if [ ${#apps[@]} -eq 0 ]; then
+		echo "Не найдено приложений, способных обработать файл $1" 1>&2
 		exit 1
 	fi
+}
 
-	# Если приложение не найдено в ~/.config/mimeapps.list или было выбрано другое приложение, начинаем диалог о добавлении или изменении приложения
-	if [ -z "$(grep "$file_type=$app" ~/.config/mimeapps.list)" ] || [ "$app" != "${apps[0]}" ]; then
-		if [ -n "$menu" ] && command -v $menu >/dev/null; then
-			yn=$(echo -e "y\nn" | eval $menu_command)
+define_app_f() {
+	# Если задана опция -a или -u и есть более одного приложения, передаем список приложений
+	if [ "$all" = true ] || [ "$user_dir" = true ] && [ ${#apps[@]} -gt 1 ]; then
+		if [ "$silent" = true ]; then
+			app=${apps[0]}
 		else
-			read -p "Хотите добавить или изменить $app в ~/.config/mimeapps.list для $file_type? (y/n) " yn
+			if [ -n "$menu" ] && command -v $menu >/dev/null; then
+				# app=$(printf '%s\n' "${apps[@]}" | eval "$menu_command")
+				while IFS= read -r line; do
+					app_set+=("$line")
+				done < <(printf '%s\n' "${apps[@]}" | eval "$menu_command")
+				app=${app_set[0]}
+			else
+				echo "Выберите приложение из списка:"
+				select app in "${apps[@]}"; do
+					break
+				done
+			fi
 		fi
-		case $yn in
-		[Yy]*) $handler $handler_command ;;
-		*) echo "Пропускаем добавление или изменение приложения" ;;
-		esac
+	else
+		app=${apps[0]}
 	fi
+}
+
+open_app_f() {
+	# Открываем что-либо($@) в выбранном приложении($app) при помощи программы(должна находиться в $PATH)
+	if [ ${#app_set[@]} -gt 1 ]; then
+		for s in "${app_set[@]}"; do
+			run-desktop "$s" "${objects[@]}" >/dev/null 2>&1 &
+		done
+	else
+		run-desktop "$app" "${objects[@]}" >/dev/null 2>&1 &
+	fi
+}
+
+set_app_f() {
+	# Если задана опция -s, пропускаем диалог о добавлении или изменении приложения
+	if [ "$silent" = false ]; then
+		# Проверяем, установлен ли handlr или xdg-utils
+		if command -v handlr >/dev/null; then
+			handler="handlr"
+			handler_command="set $file_type $app"
+		elif command -v xdg-mime >/dev/null; then
+			handler="xdg-mime"
+			handler_command="default $app $file_type"
+		else
+			echo "Не установлены handlr или xdg-utils" 1>&2
+			exit 1
+		fi
+		# Если приложение не найдено в ~/.config/mimeapps.list или было выбрано другое приложение, начинаем диалог
+		if [ -z "$(grep "$file_type=$app" ~/.config/mimeapps.list)" ] || [ "$app" != "${apps[0]}" ]; then
+			if [ -n "$menu" ] && command -v $menu >/dev/null; then
+				yn=$(echo -e "y\nn" | eval $menu_command)
+			else
+				read -p "Хотите добавить или изменить $app в ~/.config/mimeapps.list для $file_type? (y/n) " yn
+			fi
+			case $yn in
+			[Yy]*) $handler $handler_command ;;
+			*) echo "Пропускаем добавление или изменение приложения" ;;
+			esac
+		fi
+	fi
+}
+
+obj_l=("${!array[@]}")
+typ_l=("${array[@]}")
+
+if [ "${#sets_type[@]}" -gt 1 ]; then
+	for ft in "${sets_type[@]}"; do
+		file_type=$ft
+		object_for_type=()
+		objects=()
+		app=""
+		apps=()
+		s=""
+		cnt=0
+		while [ "$cnt" -lt "${#array[@]}" ]; do
+			# echo -e "${#array[@]} ${typ_l[$cnt]} : ${obj_l[$cnt]}"
+			if [ "$file_type" = "${typ_l[$cnt]}" ]; then
+				object_for_type+=("${obj_l[$cnt]}")
+				cnt="$(("$cnt" + 1))"
+			else
+				cnt="$(("$cnt" + 1))"
+			fi
+		done
+		objects=("${object_for_type[@]}")
+		search_app_f "$file_type"
+		define_app_f "${apps[@]}"
+		open_app_f "$app" "${app_set[@]}" "${objects[@]}"
+		# set_app_f
+	done
+else
+	file_type=$(mimetype -b "${objects[0]}")
+	search_app_f
+	define_app_f
+	open_app_f
+	set_app_f
 fi
