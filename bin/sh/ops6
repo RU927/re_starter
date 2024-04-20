@@ -54,36 +54,57 @@ done
 # shift $((OPTIND - 1))
 
 if [ "${#objects[@]}" -gt 1 ]; then
-	mapfile -t check_base < <(mimetype -b "${objects[0]}")
-	sets_type+=("${check_base[@]}")
 	count=0
 	while [ "$count" -lt "${#objects[@]}" ]; do
-		mapfile -t check_next < <(mimetype -b "${objects[$count]}")
-		case ${check_next[@]} in
-		"${check_next[@]}")
-			if [ "${check_next[*]}" != "${check_base[*]}" ]; then
-				subcount=0
-				while [ "$subcount" -le "${#sets_type[@]}" ]; do
-					if [ "${sets_type[$subcount]}" = "${check_next[*]}" ]; then
-						echo "! $count $subcount ${#sets_type[@]} ${sets_type[$subcount]} = ${check_next[*]} " # ${sets_type[*]}"
-						break
-						subcount="$(("$subcount" + 1))"
-					elif [ "${sets_type[$subcount]}" != "${check_next[*]}" ] && [ "$subcount" = "${#sets_type[@]}" ]; then
-						echo "!! $count $subcount = ${#sets_type[@]} ${sets_type[$subcount]} + ${check_next[*]}"
-						sets_type=("${sets_type[@]}" "${check_next[*]}")
-					else
-						echo "!!! $count $subcount < ${#sets_type[@]} ${sets_type[$subcount]} - ${check_next[*]}" # ${sets_type[*]}"
-						subcount="$(("$subcount" + 1))"
-					fi
-				done
-				count="$(("$count" + 1))"
-			else
-				count="$(("$count" + 1))"
-			fi
+		check_next=$(mimetype -b "${objects[$count]}")
+		case $check_next in
+		"$check_next")
+			subcount=0
+			while [ "$subcount" -le "${#sets_type[@]}" ]; do
+				if [ "${sets_type[$subcount]}" = "$check_next" ]; then
+					# echo "! $count $subcount ${#sets_type[@]} ${sets_type[$subcount]} = $check_next"
+					break
+				elif [ "$subcount" = "${#sets_type[@]}" ]; then
+					# echo "!! $count $subcount = ${#sets_type[@]} ${sets_type[*]} + $check_next"
+					sets_type+=("$check_next")
+				else
+					# echo "!!! $count $subcount < ${#sets_type[@]} ${sets_type[$subcount]} - $check_next"
+					subcount="$(("$subcount" + 1))"
+				fi
+			done
+			count="$(("$count" + 1))"
 			;;
 		esac
 	done
-	echo -e "${#sets_type[@]}" "${sets_type[@]}"
+	# echo -e "${#sets_type[@]}" "${sets_type[@]}"
+	count=0
+	declare -A array
+	while [ "$count" -lt "${#sets_type[@]}" ]; do
+		type=${sets_type[$count]}
+		case $type in
+		"$type")
+			subcount=0
+			while [ "$subcount" -le "${#objects[@]}" ]; do
+				object_type=$(mimetype -b "${objects[$subcount]}")
+				# echo -e "$count $subcount ${objects[$subcount]} ${object_type}"
+				if [ "$type" = "$object_type" ]; then
+					array+=([${objects[$subcount]}]=${type})
+				fi
+				subcount="$(("$subcount" + 1))"
+			done
+			count="$(("$count" + 1))"
+			;;
+		esac
+	done
+
+	obj_l=("${!array[@]}")
+	typ_l=("${array[@]}")
+	cnt=0
+	while [ "$cnt" -lt "${#array[@]}" ]; do
+		echo -e "${#array[@]} ${typ_l[$cnt]} : ${obj_l[$cnt]}"
+		cnt="$(("$cnt" + 1))"
+	done
+
 else
 	file_type=$(mimetype -b "${objects[0]}")
 fi
