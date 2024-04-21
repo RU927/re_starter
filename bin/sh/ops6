@@ -139,7 +139,7 @@ define_app_f() {
 				while IFS= read -r line; do
 					app_set+=("$line")
 				done < <(printf '%s\n' "${apps[@]}" | eval "$menu_command")
-				app=${app_set[0]}
+				# app=${app_set[0]}
 			else
 				echo "Выберите приложение из списка:"
 				select app in "${apps[@]}"; do
@@ -154,7 +154,7 @@ define_app_f() {
 
 open_app_f() {
 	# Открываем что-либо($@) в выбранном приложении($app) при помощи программы(должна находиться в $PATH)
-	if [ ${#app_set[@]} -gt 1 ]; then
+	if [ ${#app_set[@]} -ge 1 ]; then
 		for s in "${app_set[@]}"; do
 			run-desktop "$s" "${objects[@]}" >/dev/null 2>&1 &
 		done
@@ -200,9 +200,9 @@ if [ "${#sets_type[@]}" -gt 1 ]; then
 		file_type=$ft
 		object_for_type=()
 		objects=()
-		app=""
 		apps=()
-		s=""
+    new_apps=()
+    app_set=()
 		cnt=0
 		while [ "$cnt" -lt "${#array[@]}" ]; do
 			# echo -e "${#array[@]} ${typ_l[$cnt]} : ${obj_l[$cnt]}"
@@ -215,8 +215,8 @@ if [ "${#sets_type[@]}" -gt 1 ]; then
 		done
 		objects=("${object_for_type[@]}")
 		search_app_f "$file_type"
-		define_app_f "${apps[@]}"
-		open_app_f "$app" "${app_set[@]}" "${objects[@]}"
+		define_app_f
+		open_app_f
 		# set_app_f
 	done
 else
