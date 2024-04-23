@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=JupyterLab
-Comment=Run JupyterLab
-Exec=jupyter-lab %f
+Name=Jupyter Notebook
+Comment=Run Jupyter Notebook
+Exec=jupyter-notebook %f
 Terminal=false
 Type=Application
-Icon=jupyterlab
+Icon=notebook
 StartupNotify=true
 MimeType=application/x-ipynb+json;
 Categories=Development;Education;
