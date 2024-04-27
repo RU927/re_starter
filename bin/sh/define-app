@@ -47,7 +47,7 @@ for i in "$@"; do
 			;;
 		esac
 	elif [[ "$i" != -* ]]; then
-		objects+=("${i}")
+		objects+=("$(realpath "${i}")")
 		# echo -e "${objects[@]}"
 	fi
 done
@@ -130,8 +130,8 @@ search_app_f() {
 
 define_app_f() {
 	# Если задана опция -a или -u и есть более одного приложения, передаем список приложений
-  # if [ "$all" = true ] || [ "$user_dir" = true ] || [ ${#apps[@]} -gt 1 ]; then
-  if [ ${#apps[@]} -gt 1 ]; then
+	# if [ "$all" = true ] || [ "$user_dir" = true ] || [ ${#apps[@]} -gt 1 ]; then
+	if [ ${#apps[@]} -gt 1 ]; then
 		if [ "$silent" = true ]; then
 			app=${apps[0]}
 		else
@@ -179,7 +179,7 @@ set_app_f() {
 			exit 1
 		fi
 		# Если приложение не найдено в ~/.config/mimeapps.list или было выбрано другое приложение, начинаем диалог
-		if  ! grep -q "$app" ~/.config/mimeapps.list || [ "$app" != "${apps[0]}" ]; then
+		if ! grep -q "$app" ~/.config/mimeapps.list || [ "$app" != "${apps[0]}" ]; then
 			if [ -n "$menu" ] && command -v $menu >/dev/null; then
 				yn=$(echo -e "y\nn" | eval $menu_command)
 			else
@@ -202,8 +202,8 @@ if [ "${#sets_type[@]}" -gt 1 ]; then
 		object_for_type=()
 		objects=()
 		apps=()
-    new_apps=()
-    app_set=()
+		new_apps=()
+		app_set=()
 		cnt=0
 		while [ "$cnt" -lt "${#array[@]}" ]; do
 			# echo -e "${#array[@]} ${typ_l[$cnt]} : ${obj_l[$cnt]}"
