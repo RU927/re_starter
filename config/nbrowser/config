@@ -5,10 +5,10 @@ NBROWSER_PLAYER=mpv
 NBROWSER_DOWNLOADER=youtube-dl
 COPY_TO_CLIPBOARD_OPTION=false
 
-browser_count=$((browser_count+1))
-installed_browsers[$browser_count]="Luakit	:	$(which luakit)"
-browser_count=$((browser_count+1))
-installed_browsers[$browser_count]="Brave browser	:	$(which brave-browser)"
-browser_count=$((browser_count+1))
-installed_browsers[$browser_count]="Yandex browser	:	$(which yandex-browser)"
+# browser_count=$((browser_count+1))
+# installed_browsers[$browser_count]="Luakit	:	$(which luakit)"
+# browser_count=$((browser_count+1))
+# installed_browsers[$browser_count]="Brave browser	:	$(which brave-browser)"
+# browser_count=$((browser_count+1))
+# installed_browsers[$browser_count]="Yandex browser	:	$(which yandex-browser)"
 
