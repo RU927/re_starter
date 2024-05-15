@@ -2,8 +2,8 @@
 
 themedir="$HOME/.config/rofi"
 themename="config"
-TMPDIR="$HOME/vids/tmp"
-DESTDIR="$HOME/vids/ffmpeg"
+TMPDIR="$TMP/Records"
+DESTDIR="$HOME/Videos/Records"
 
 [[ ! -f $TMPDIR ]] && mkdir -p "$TMPDIR"
 [[ ! -f $DESTDIR ]] && mkdir -p "$DESTDIR"
