@@ -16,10 +16,17 @@ _rofi() {
 		-theme-str 'element-text {horizontal-align: 0;}' \
 		-theme-str 'element-icon {enabled: false;}' \
 		-theme-str 'textbox {horizontal-align: 0;}' \
-		-dmenu -i -no-levenshtein-sort -width 1000 "$@" \
+		-dmenu -i -matching fuzzy -sorting-method fzf -width 1000 "$@" \
 		-sep $sep -eh 3
 }
-
+rofi_l() {
+  rofi \
+    -theme-str 'window {location: center; anchor: center; fullscreen: false; height: 280px; width: 960px;}' \
+		-theme-str 'listview {columns: 1; spacing: 1px;}' \
+		-theme-str 'element-text {horizontal-align: 0;}' \
+		-theme-str 'element-icon {enabled: false;}' \
+    -dmenu -i -no-levenshtein-sort -width 1000 "$@"
+}
 # display settings
 display_type=5
 max_str_width=100
@@ -61,7 +68,7 @@ Use <span color='${help_color}'>${switch_view}</span> to switch View. <span colo
 		content=$(parseBuku)
 		menu=$(echo "${content}" | _rofi -p '> ' -filter "${filter}" -mesg "${HELP}" -kb-custom-1 "${new_bookmark}" -kb-custom-2 "${switch_view}" -kb-custom-3 "${actions}" -kb-custom-4 "${edit}" -kb-custom-5 "${delete}")
 	elif [[ $mode == "tags" ]]; then
-		menu=$(buku --nostdin --np --st | grep -v -e '^waiting for input$' -e '^$' | awk '{$NF=""; print $0}' | cut -d ' ' -f2- | _rofi -p '> ' -mesg "${HELP}" -kb-custom-1 "${new_bookmark}" -kb-custom-2 "${switch_view}" -kb-custom-3 "${actions}" -kb-custom-4 "${edit}" -kb-custom-5 "${delete}")
+		menu=$(buku --nostdin --np --st | grep -v -e '^waiting for input$' -e '^$' | awk '{$NF=""; print $0}' | cut -d ' ' -f2- | rofi_l -p '> ' -mesg "${HELP}" -kb-custom-1 "${new_bookmark}" -kb-custom-2 "${switch_view}" -kb-custom-3 "${actions}" -kb-custom-4 "${edit}" -kb-custom-5 "${delete}")
 	fi
 	val=$?
 	if [[ $val -eq 1 ]]; then
@@ -96,7 +103,7 @@ Use <span color='${help_color}'>${switch_view}</span> to switch View. <span colo
 
 optionsMenu() {
 	if [[ $mode == "bookmarks" ]]; then
-		askmenu=$(echo -e "< Return\\n---\\n1. Edit\\n2. Delete" | _rofi -p '> ' -mesg "Choose Action for bookmark")
+		askmenu=$(echo -e "< Return\\n---\\n1. Edit\\n2. Delete" | rofi_l -p '> ' -mesg "Choose Action for bookmark")
 		val=$?
 		if [[ $val -eq 1 ]]; then
 			exit
@@ -111,7 +118,7 @@ optionsMenu() {
 			fi
 		fi
 	elif [[ $mode == "tags" ]]; then
-		askmenu=$(echo -e "< Return\\n---\\n1. Replace Tag\\n2. Delete Tag" | _rofi -p '> ' -mesg "Choose Action for tag \"${menu}\"")
+		askmenu=$(echo -e "< Return\\n---\\n1. Replace Tag\\n2. Delete Tag" | rofi_l -p '> ' -mesg "Choose Action for tag \"${menu}\"")
 		val=$?
 		if [[ $val -eq 1 ]]; then
 			exit
@@ -120,7 +127,7 @@ optionsMenu() {
 				export mode=tags
 				main
 			elif [[ $askmenu == "1. Replace Tag" ]]; then
-				newtag=$(echo | _rofi -p '> ' -mesg "Enter new tag name for tag \"${menu}\"")
+				newtag=$(echo | rofi_l -p '> ' -mesg "Enter new tag name for tag \"${menu}\"")
 				val=$?
 				if [[ $val -eq 1 ]]; then
 					exit
@@ -133,7 +140,7 @@ optionsMenu() {
 					fi
 				fi
 			elif [[ $askmenu == "2. Delete Tag" ]]; then
-				delask=$(echo -e "1. Yes\\n2. No" | _rofi -p '> ' -mesg "Really delete tag \"${menu}\" from ALL bookmarks?")
+				delask=$(echo -e "1. Yes\\n2. No" | rofi_l -p '> ' -mesg "Really delete tag \"${menu}\" from ALL bookmarks?")
 				val=$?
 				if [[ $val -eq 1 ]]; then
 					exit
@@ -153,7 +160,7 @@ optionsMenu() {
 
 deleteMenu() {
 	id=$(getId "$content" "$menu")
-	delask=$(echo -e "1. Yes\\n2. No" | _rofi -p '> ' -mesg "Really delete bookmark?")
+	delask=$(echo -e "1. Yes\\n2. No" | rofi_l -p '> ' -mesg "Really delete bookmark?")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
@@ -176,7 +183,7 @@ editMenu() {
 	tags="$(getTagsFromId "${id}")"
 
 	content="1. Title: $title\\n2. URL: $url\\n3. Comment: $comment\\n4. Tags: $tags"
-	editmenu=$(echo -e "< Return\\n---\\n${content}" | _rofi -p '> ')
+	editmenu=$(echo -e "< Return\\n---\\n${content}" | rofi_l -p '> ')
 	val=$?
 
 	if [[ $val -eq 1 ]]; then
@@ -199,7 +206,7 @@ editMenu() {
 }
 
 editTitle() {
-	titlemenu=$(echo "" | _rofi -p "> " -filter "${title}" -mesg "Edit Title and hit Enter")
+	titlemenu=$(echo "" | rofi_l -p "> " -filter "${title}" -mesg "Edit Title and hit Enter")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
@@ -210,7 +217,7 @@ editTitle() {
 }
 
 editUrl() {
-	urlmenu=$(echo "" | _rofi -p "> " -filter "${url}" -mesg "Edit URL and hit Enter")
+	urlmenu=$(echo "" | rofi_l -p "> " -filter "${url}" -mesg "Edit URL and hit Enter")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
@@ -218,7 +225,7 @@ editUrl() {
 		if [[ $urlmenu == "http"* ]]; then
 			buku --nostdin -u "${id}" --url "${urlmenu}"
 		else
-			echo "" | _rofi -e "Not a valid URI, Make sure URLs start with http"
+			echo "" | rofi_l -e "Not a valid URI, Make sure URLs start with http"
 			editUrl
 		fi
 	fi
@@ -226,7 +233,7 @@ editUrl() {
 }
 
 editComment() {
-	commentmenu=$(echo "" | _rofi -p "> " -filter "${comment}" -mesg "Edit Comment and hit Enter")
+	commentmenu=$(echo "" | rofi_l -p "> " -filter "${comment}" -mesg "Edit Comment and hit Enter")
 	val=$?
 
 	if [[ $val -eq 1 ]]; then
@@ -239,7 +246,7 @@ editComment() {
 }
 
 editTags() {
-	edittagsmenu=$(echo | _rofi -filter "${tags}" -p '> ' -mesg "Edit Tags and hit Enter")
+	edittagsmenu=$(echo | rofi_l -filter "${tags}" -p '> ' -mesg "Edit Tags and hit Enter")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
@@ -251,7 +258,7 @@ editTags() {
 
 addMark() {
 	givenurl=${1:-"$(xclip -o)"}
-	inserturl=$(echo -e "$givenurl" | _rofi -p '> ' -mesg "Use URL below or type manually")
+	inserturl=$(echo -e "$givenurl" | rofi_l -p '> ' -mesg "Use URL below or type manually")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
@@ -261,7 +268,7 @@ addMark() {
 }
 
 addTags() {
-	inserttags=$(buku --nostdin --np --st | grep -v '^waiting for input$' | awk '{$NF=""; print $0}' | cut -d ' ' -f2- | _rofi -p '> ' -mesg "Add some tags. Separate tags with ', '")
+	inserttags=$(buku --nostdin --np --st | grep -v '^waiting for input$' | awk '{$NF=""; print $0}' | cut -d ' ' -f2- | rofi_l -p '> ' -mesg "Add some tags. Separate tags with ', '")
 	val=$?
 	if [[ $val -eq 1 ]]; then
 		exit
