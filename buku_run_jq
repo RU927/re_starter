@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-# https://github.com/Cybolic/buku_run
-
+# https://github.com/carnager/buku_run
+# https://github.com/GandaG/buku_run
+# https://github.com/Cybolic/buku_run !!jq
+# https://github.com/davatorium/rofi/issues/1069#issuecomment-599724565
+# rofi_l() {
+#   rofi -dmenu -i -no-levenshtein-sort -width 1000 "$@"
+# }
 sep='\n'
 _rofi() {
 	rofi \
@@ -8,9 +13,10 @@ _rofi() {
 		-theme-str 'window {location: center; anchor: center; fullscreen: false; height: 280px; width: 960px;}' \
 		-theme-str 'listview {columns: 1; spacing: 1px;}' \
 		-theme-str 'element-text {horizontal-align: 0;}' \
+		-theme-str 'element-icon {enabled: false;}' \
 		-theme-str 'textbox {horizontal-align: 0;}' \
 		-dmenu -i -no-levenshtein-sort -width 1000 "$@" \
-		-sep $sep -eh 2
+		-sep $sep -eh 3
 }
 
 # display settings
@@ -263,7 +269,7 @@ parseBuku() {
 	elif [ "$display_type" = "3" ]; then
 		jq_program="$jq_program"' + "\t" + .uri[0:'$max_str_width']'
 	elif [ "$display_type" = "5" ]; then
-		jq_program='.[] | (.index | tostring) + " " + .title[0:'$max_str_width'] + "\r  " + .uri[0:'$max_str_width']'
+		jq_program='.[] | (.index | tostring) + " " + .title[0:'$max_str_width'] + "\r " + .uri[0:'$max_str_width'] + "\r " + .tags'
 	fi
 	content="$(buku --nc --np --nostdin --print --json)"
 	if [[ "$content" = 'buku: waiting'* ]]; then
