@@ -7,7 +7,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    height:                      480px;
+    // height:                      480px;
     width:                       960px;
     x-offset:                    0px;
     y-offset:                    0px;
@@ -107,13 +107,13 @@ case-indicator {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       8;
+    lines:                       6;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   true;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
+    fixed-height:                false;
     fixed-columns:               true;
 
 
@@ -139,14 +139,15 @@ element {
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     3px 0px;
+    padding:                     5px 5px;
     border:                      1px solid;
-    border-radius:               5px;
+    border-radius:               3px;
     border-color:                @border-colour;
     background-color:            @background-color;
     text-color:                  @foreground-colour;
     cursor:                      pointer;
 }
+
 element normal.normal {
     background-color:            var(normal-background);
     text-color:                  var(normal-foreground);
@@ -185,6 +186,7 @@ element alternate.active {
 }
 
 element-icon {
+    enabled:                     false;
     background-color:            inherit;
     text-color:                  inherit;
     size:                        20px;
