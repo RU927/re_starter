@@ -1,19 +1,17 @@
 [Added Associations]
-x-scheme-handler/geo=wheelmap-geo-handler.desktop;
-x-scheme-handler/http=google-chrome.desktop;
-x-scheme-handler/https=google-chrome.desktop;
-x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
 
 [Default Applications]
-application/pdf=nbrowser.desktop;okularApplication_pdf.desktop;
+application/pdf=zathura.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
 application/x-desktop=run-desktop.desktop;
+application/x-ipynb+json=jupyter-notebook.desktop;jupyterlab.desktop;
 application/x-shellscript=neovim.desktop;
-image/jpeg=feh.desktop;gimp.desktop;
+application/x-mimearchive=nbrowser.desktop
+image/jpeg=feh.desktop;
 image/png=feh.desktop;
-text/plain=/home/ru/.local/share/applications/neovim.desktop;
-x-scheme-handler/browser=nbrowser.desktop;
-x-scheme-handler/geo=wheelmap-geo-handler.desktop;
-x-scheme-handler/http=nbrowser.desktop;
-x-scheme-handler/https=nbrowser.desktop;
+inode/directory=xplr.desktop;
+text/html=luakit.desktop;
+text/plain=neovim.desktop;
+text/x-lua=neovim.desktop;
+text/x-matlab=neovim.desktop;
 x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
-
