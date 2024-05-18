@@ -15,3 +15,5 @@ text/plain=neovim.desktop;
 text/x-lua=neovim.desktop;
 text/x-matlab=neovim.desktop;
 x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
+x-scheme-handler/http=nbrowser.desktop
+x-scheme-handler/https=nbrowser.desktop
