@@ -15,8 +15,11 @@ config_dir=$HOME/.config
 
 mkdir -p "$config_dir"
 
+linkExists() {
+	[[ -e "$1" ]] && [[ -L "$1" ]]
+}
 configExists() {
-	[[ -e "$1" ]] && [[ ! -L "$1" ]]
+	[[ -e "$1" ]]
 }
 
 command_exists() {
@@ -89,44 +92,49 @@ function back_sym {
 	# файлы которых есть в ./config ./home
 	echo -e "\u001b${YELLOW} Backing up existing files... ${RC}"
 	for config in $(command ls "${dot_config}"); do
-		if configExists "${config_dir}/${config}"; then
-			echo -e "${YELLOW}Moving old config ${config_dir}/${config} to ${config_dir}/${config}.old${RC}"
-			if ! mv "${config_dir}/${config}" "${config_dir}/${config}.old"; then
-				echo -e "${RED}Can't move the old config!${RC}"
+		if linkExists "${config_dir}/${config}"; then
+			echo -e "${YELLOW}Removing old link ${config_dir}/${config} ${RC}"
+			if ! rm -rf "${config_dir}/${config}"; then
+				echo -e "${RED}Can't remove the old link!${RC}"
 				exit 1
 			fi
-			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+			# echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+    elif configExists "${config_dir}/${config}"; then
+      echo -e "${YELLOW}Moving old config ${config_dir}/${config} -> ${config_dir}/$config.old($(date -u +%d-%B-%H:%M:%S)) ${RC}"
+      if ! mv "${config_dir}/${config}" "${config_dir}/${config}.old($(date -u +%d-%B-%H:%M:%S))"; then
+				echo -e "${RED}Can't backup the old config!${RC}"
+				exit 1
+			fi
 		fi
-		echo -e "${GREEN}Linking ${dot_config}/${config} to ${config_dir}/${config}${RC}"
-		if ! ln -snf "${dot_config}/${config}" "${config_dir}/${config}"; then
-			echo echo -e "${RED}Can't link the config!${RC}"
+		echo -e "${GREEN}Copy ${dot_config}/${config} to ${config_dir}/${config}${RC}"
+		if ! cp -a "${dot_config}/${config}" "${config_dir}/${config}"; then
+			echo echo -e "${RED}Can't copy the config!${RC}"
 			exit 1
 		fi
 	done
 
-	applist="$this_dir/local/share/applications"
-
-	for ma in $(command ls "${applist}"); do
-		echo -e "${GREEN}Linking ${applist}/${ma} to $HOME/.local/share/applications/${ma} ${RC}"
-		ln -snf "$applist/$ma" "$HOME/.local/share/applications/$ma"
-	done
-
 	# for config in $(command ls "${dot_home}"); do
-	# 	if configExists "$HOME/.${config}"; then
-	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
-	# 		if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
+	# 	if linkExists "$HOME/.${config}"; then
+	# 		echo -e "${YELLOW}Removing old link ${HOME}/.${config}"
+	# 		if ! rm -f "${HOME}/.${config}"; then
 	# 			echo -e "${RED}Can't move the old config!${RC}"
 	# 			exit 1
 	# 		fi
-	# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+ #    elif configExists "${HOME}/.${config}"; then
+ #      echo -e "${YELLOW}Moving old config ${HOME}/.${config} -> ${HOME}/.$config.old($(date -u +%d-%B-%H:%M:%S)) ${RC}"
+ #      if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old($(date -u +%d-%B-%H:%M:%S))"; then
+	# 			echo -e "${RED}Can't backup the old config!${RC}"
+	# 			exit 1
+	# 		fi
+	# 		# echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 	# 	fi
-	# 	echo -e "${GREEN}Linking ${dot_home}/${config} to ${HOME}/.${config}${RC}"
-	# 	if ! ln -snf "${dot_home}/${config}" "${HOME}/.${config}"; then
-	# 		echo echo -e "${RED}Can't link the config!${RC}"
+	# 	echo -e "${GREEN}Copy ${dot_home}/${config} to ${HOME}/.${config}${RC}"
+	# 	if ! cp -a "${dot_home}/${config}" "${HOME}/.${config}"; then
+	# 		echo echo -e "${RED}Can't copy the config!${RC}"
 	# 		exit 1
 	# 	fi
 	# done
-	#
+}
 	#xdg-mime query default application/pdf
 	# xdg-mime default nbrowser.desktop x-scheme-handler/https x-scheme-handler/http x-scheme-handler/browser
 	# xdg-mime query filetype pathTofileYourInterestedIn
@@ -137,7 +145,6 @@ function back_sym {
 	# for m in $(grep MimeType "$d" | cut -d= -f2 | tr ";" " "); do
 	#   echo xdg-mime default "'$d'" "'$m'"
 	# done
-}
 
 function install_greenclip {
 	echo -e "${RV} Installing greenclip ${RC}"
