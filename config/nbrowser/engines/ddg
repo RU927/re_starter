@@ -1,3 +1,0 @@
-nbrowser_search(){
- echo "http://duckduckgo.com/?q=$@" 
-}
